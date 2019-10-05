@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:02:24 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/09/26 14:02:06 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/05 13:45:38 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,5 @@ void			*ft_realloc(void *src, size_t old_size, size_t new_size);
 t_dlist			*ft_dlst_create_elem(void *data);
 void			ft_dlst_push_front(t_dlist **dlst, t_dlist *el);
 void			ft_dlst_push_back(t_dlist **dlst, t_dlist *el);
+int				ft_dlst_deli(t_dlist *dlst, size_t i);
 #endif

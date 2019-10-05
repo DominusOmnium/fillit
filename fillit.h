@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/04 22:18:55 by marvin           ###   ########.fr       */
+/*   Updated: 2019/10/05 13:46:57 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include "libft/libft.h"
-# define figure_1_1 "#...#...#...#..."
+const char figure_1_1[] = "#...#...#...#...";
 # define figure_1_2 "####............"
 # define figure_2_1 ".##.##.........."
 # define figure_2_2 "#...##...#......"
@@ -28,7 +28,7 @@
 # define figure_5_3 "##...#...#......"
 # define figure_5_4 "###.#..........."
 # define figure_6_1 "###..#.........."
-# define figure_6_2 "#...##..#......."
+const char figure_6_2[] = "#...##..#.......";
 # define figure_6_3 ".#..###........."
 # define figure_6_4 ".#..##...#......"
 # define figure_7_1 ".#...#..##......"

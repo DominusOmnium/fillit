@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:25:15 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/09/26 14:36:35 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/05 13:04:20 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	ft_dlst_deli(t_dlist *dlst, size_t i)
 	}
 	dlst->prev->next = dlst->next;
 	dlst->next->prev = dlst->prev;
-	ft_memdel(dlst);
+	ft_memdel((void **)&dlst);
 	return (1);
 }

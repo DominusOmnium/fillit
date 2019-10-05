@@ -6,7 +6,7 @@
 #    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 14:02:51 by dkathlee          #+#    #+#              #
-#    Updated: 2019/09/26 13:55:59 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/10/05 13:02:58 by dkathlee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS =	ft_atoi.c ft_btree_apply_infix.c ft_btree_apply_prefix.c \
 	ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 	ft_strnew.c ft_strnlen.c ft_strnstr.c ft_strrchr.c ft_strsplit.c \
 	ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c \
-	ft_realloc.c ft_dlst_create_elem.c ft_dlst_push_front.c
+	ft_realloc.c ft_dlst_create_elem.c ft_dlst_push_front.c \
+	ft_dlst_push_back.c ft_dlst_deli.c
 
 OBJECTS = ft_atoi.o ft_btree_apply_infix.o ft_btree_apply_prefix.o \
 	ft_btree_apply_suffix.o ft_btree_create_node.o \
@@ -46,7 +47,9 @@ OBJECTS = ft_atoi.o ft_btree_apply_infix.o ft_btree_apply_prefix.o \
 	ft_strmapi.o ft_strncat.o ft_strncmp.o ft_strncpy.o ft_strnequ.o \
 	ft_strnew.o ft_strnlen.o ft_strnstr.o ft_strrchr.o ft_strsplit.o \
 	ft_strstr.o ft_strsub.o ft_strtrim.o ft_tolower.o ft_toupper.o \
-	ft_realloc.o ft_dlst_create_elem.o ft_dlst_push_front.o
+	ft_realloc.o ft_dlst_create_elem.o ft_dlst_push_front.o \
+	ft_dlst_push_back.o ft_dlst_deli.o
+
 
 
 all: $(NAME)
