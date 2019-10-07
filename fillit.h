@@ -16,6 +16,8 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include "libft/libft.h"
+
+/*
 const char figure_1_1[] = "#...#...#...#...";
 # define figure_1_2 "####............"
 # define figure_2_1 ".##.##.........."
@@ -41,5 +43,10 @@ const char figure_6_2[] = "#...##..#.......";
 # define f_transit_6_3 "#..###.........."
 # define f_transit_6_4 "#..##...#......."
 # define f_transit_7_1 "#...#..##......."
+*/
 
+char		**create_square(size_t size);
+void		del_col(t_dlist *lst, size_t col);
+void		del_row(t_dlist **lst, size_t col);
+void		del_square(t_dlist **lst);
 #endif
