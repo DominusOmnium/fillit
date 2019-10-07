@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/05 13:46:57 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:07:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ const char figure_6_2[] = "#...##..#.......";
 # define f_transit_6_4 "#..##...#......."
 # define f_transit_7_1 "#...#..##......."
 */
-
+typedef struct	s_point
+{
+	int				i;
+	int				j;
+}				t_point;
 char		**create_square(size_t size);
 void		del_col(t_dlist *lst, size_t col);
 void		del_row(t_dlist **lst, size_t col);
