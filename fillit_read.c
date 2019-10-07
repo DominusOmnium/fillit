@@ -3,82 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   fillit_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/05 13:46:02 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:20:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-int	check_figure(t_dlist **figures, char *str)
+int check_figure(t_dlist **figures, char *str)
 {
-	int i;
-	int flag;
-	int m;
-
+	t_point	*m_point;
+	int		i;
+	int		j;
+	int		c;
+	
+	m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4);
 	i = 0;
-	flag = 0;
-	while (str[i] != '\0')
+	c = 0;
+	while (i < 4)
 	{
-		if (str[i] != '.' && str[i] != '#')
-			return (-1);
-		if (str[i] == '#' && flag == 0)
+		j = 0;
+		while (j < 4)
 		{
-			m = i;
-			flag = 1;
-		}
-		if (str[i] == '#')
-		{
-			str[i - m] = '#';
-			str[i] = '.';
+			if (str[4 * i + j] != '#' && str[4 * i + j] != '.')
+				return (-1);
+			if (str[4 * i + j] == '#')
+			{
+				m_point[c].i = i;
+				m_point[c].j = j;
+				c++;
+			}
+			j++;
 		}
 		i++;
 	}
-	printf("Str: %s\n", str);
-	if (ft_strcmp(str, figure_1_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_1_1));
-	else if (ft_strcmp(str, figure_1_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_1_2));
-	else if (ft_strcmp(str, f_transit_2_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_2_1));
-	else if (ft_strcmp(str, figure_2_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_2_2));
-	else if (ft_strcmp(str, figure_3_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_3_1));
-	else if (ft_strcmp(str, f_transit_3_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_3_2));
-	else if (ft_strcmp(str, figure_4_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_4_1));
-	else if (ft_strcmp(str, figure_5_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_5_1));
-	else if (ft_strcmp(str, f_transit_5_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_5_2));
-	else if (ft_strcmp(str, figure_5_3) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_5_3));
-	else if (ft_strcmp(str, figure_5_4) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_5_4));
-	else if (ft_strcmp(str, figure_6_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_6_1));
-	else if (ft_strcmp(str, figure_6_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(figure_6_2));
-	else if (ft_strcmp(str, f_transit_6_3) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_6_3));
-	else if (ft_strcmp(str, f_transit_6_4) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_6_4));
-	else if (ft_strcmp(str, f_transit_7_1) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&f_transit_7_1));
-	else if (ft_strcmp(str, figure_7_2) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_7_2));
-	else if (ft_strcmp(str, figure_7_3) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_7_3));
-	else if (ft_strcmp(str, figure_7_4) == 0)
-		ft_dlst_push_back(figures, ft_dlst_create_elem(&figure_7_4));
-	else
-		return (-1);
-	return (0);
+	c = 0;
+	i = m_point[0].i;
+	j = m_point[0].j;
+	while (c < 4)
+	{
+		m_point[c].i = m_point[c].i - i;
+		m_point[c].j = m_point[c].j - j;
+		c++;
+	}
+	ft_dlst_push_back(figures, ft_dlst_create_elem((void*)m_point));
 }
 
 int	fillit_read(t_dlist **figures, char *fname)
@@ -99,21 +70,22 @@ int	fillit_read(t_dlist **figures, char *fname)
 			if (read(fd, str, 5) == 0)
 				return (0);
 			if (str[4] != '\n')
-			{
-				printf("chr: %c\n", str[4]);
 				return (-1);
-			}
 			str += 4;
 			i++;
 		}
-		//if (check_figure(figures, new) == -1)
-		//	return (-1);
-		if (read(fd, str, 1) != 0 && *str != '\n')
-		{
-			printf("str: %s\n", new);	
+		if (check_figure(figures, new) == -1)
 			return (-1);
-		}
+		if (read(fd, str, 1) != 0 && *str != '\n')	
+			return (-1);
 	}
+}
+
+t_dlist *read_tetriminos(char fname)
+{
+	t_dlist *figures;
+
+	fillit_read(&figures, fname);
 }
 
 int main()
