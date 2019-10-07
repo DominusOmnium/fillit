@@ -15,6 +15,7 @@
 # include <io.h>
 # include <stdlib.h>
 # include <string.h>
+# define ABS(Value) Value < 0 ? -Value : Value
 
 typedef struct	s_list
 {
