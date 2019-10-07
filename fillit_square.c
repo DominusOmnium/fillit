@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-
+/*
 t_dlist	*create_square(size_t size)
 {
 	size_t	i;
@@ -34,28 +34,33 @@ t_dlist	*create_square(size_t size)
 		i++;
 	}
 	return (res);
-}
+}*/
 
-void	del_col(t_dlist *lst, size_t col)
+char	**create_square(size_t size)
 {
-	while (lst != NULL)
-		ft_dlst_deli((t_dlist**)(&(lst->content)), col);
-}
+	char	**res;
+	size_t	i;
 
-void	del_row(t_dlist *lst, size_t col)
-{
-	ft_dlst_deli((t_dlist**)(&(lst->content)), col);
-}
-
-void	del_square(t_dlist **lst)
-{
-	t_dlist *tmp;
-
-	tmp = *lst;
-	while (tmp != NULL)
+	if ((res = (char**)ft_memalloc(size)) == NULL)
+		return (NULL);
+	i = 0;
+	while (i < size)
 	{
-		ft_dlst_delete((t_dlist **)(&(tmp->content)));
-		tmp = tmp->next;
+		if ((res[i] = (char*)ft_memalloc(size)) == NULL)
+		{
+			while (--i >= 0)
+				ft_memdel((void**)&(res[i]));
+			ft_memdel((void**)&res);
+			return (NULL);
+		}
+		i++;
 	}
-	ft_dlst_delete(lst);
+	return (res);
+}
+
+void	delete_square(char **matrix, size_t size)
+{
+	while (--size >= 0)
+		ft_memdel((void**)&(matrix[size]));
+	ft_memdel((void**)matrix);
 }
