@@ -12,14 +12,19 @@
 
 #include "libft.h"
 
-t_dlist	*ft_dlst_create_elem(void *data)
+t_dlist	*ft_dlst_create_elemc(void *data, size_t n)
 {
 	t_dlist	*res;
 	
 	if (data == NULL || (res = ft_memalloc(sizeof(t_dlist))) == NULL)
 		return (NULL);
-	res->content = data;
-	res->content_size = 0;
+	if ((res->content = ft_memalloc(n)) == NULL)
+	{
+		ft_memdel((void **)&res);
+		return (NULL);
+	}
+	res->content = ft_memcpy(res->content, data, n);
+	res->content_size = n;
 	res->next = NULL;
 	res->prev = NULL;
 	return (res);

@@ -12,32 +12,8 @@
 
 #include "libft.h"
 
-int	ft_dlst_deli(t_dlist **dlst, size_t i)
+void	ft_dlst_delete(t_dlist **dlst)
 {
-	t_dlist	*tmp;
-
-	if (dlst == NULL)
-		return (-1);
-	while (i > 0)
-	{
-		if ((*dlst)->next == NULL)
-			return (0);
-		*dlst = (*dlst)->next;
-	}
-	if (i == 0)
-	{
-		tmp = (*dlst)->next;
-		tmp->prev = NULL;
-		ft_memdel((void **)&((*dlst)->content));
-		ft_memdel((void **)dlst);
-		*dlst = tmp;
-	}
-	else
-	{
-		(*dlst)->prev->next = (*dlst)->next;
-		(*dlst)->next->prev = (*dlst)->prev;
-		ft_memdel((void **)&((*dlst)->content));
-		ft_memdel((void **)dlst);
-	}
-	return (1);
+	while (ft_dlst_deli(dlst, 0) != -1);
+	*dlst = NULL;
 }

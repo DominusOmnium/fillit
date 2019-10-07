@@ -12,7 +12,7 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <unistd.h>
+# include <io.h>
 # include <stdlib.h>
 # include <string.h>
 
@@ -30,7 +30,8 @@ typedef struct	s_btree
 }				t_btree;
 typedef struct	s_dlist
 {
-	void			*data;
+	void			*content;
+	size_t			content_size;
 	struct s_dlist	*next;
 	struct s_dlist	*prev;
 }				t_dlist;
@@ -107,7 +108,9 @@ void			ft_btree_insert_data(t_btree **root, void *item,
 int				ft_btree_level_count(t_btree *root);
 void			*ft_realloc(void *src, size_t old_size, size_t new_size);
 t_dlist			*ft_dlst_create_elem(void *data);
+t_dlist			*ft_dlst_create_elemc(void *data, size_t n);
 void			ft_dlst_push_front(t_dlist **dlst, t_dlist *el);
 void			ft_dlst_push_back(t_dlist **dlst, t_dlist *el);
-int				ft_dlst_deli(t_dlist *dlst, size_t i);
+int				ft_dlst_deli(t_dlist **dlst, size_t i);
+void			ft_dlst_delete(t_dlist **dlst);
 #endif
