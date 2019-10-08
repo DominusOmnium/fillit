@@ -15,47 +15,43 @@
 
 int main(int ac, char **av)
 {
-	t_dlist	*tetriminos;
+	t_dlist	*tet;
+	char	**res;
 
-	tetriminos = read_tetriminos();
+	if (ac != 2)
+	{
+		ft_putendl("Error");
+		return (0);
+	}
+	tet = read_tetriminos(av[1]);
+	res = find_square(tet);
 	return (0);
 }
-
+/*
 int main(int ac, char **av)
 {
-	t_dlist *sq;
-	t_dlist	*tmp;
-	t_dlist	*row;
+	t_point *t;
+	t_dlist *tet;
+	t_dlist *matr;
+	t_dlist *row;
+	t_dlist *tmp;
 
-	sq = create_square(5);
-	tmp = sq;
+	tet = read_tetriminos("in.txt");
+	matr = create_matrix(2, tet);
+	tmp = matr;
+	
 	while (tmp != NULL)
 	{
 		row = (t_dlist *)(tmp->content);
 		while (row != NULL)
 		{
-			printf("%c", *((char*)row->content));
+			printf("%c", *((char*)(row->content)));
 			row = row->next;
 		}
 		printf("\n");
 		tmp = tmp->next;
 	}
-	
-	printf("-----------------------------------------------------------\n");
-	
-	del_col(sq, 0);
-	tmp = sq;
-	while (tmp != NULL)
-	{
-		row = (t_dlist *)(tmp->content);
-		while (row != NULL)
-		{
-			printf("%c", *((char*)row->content));
-			row = row->next;
-		}
-		printf("\n");
-		tmp = tmp->next;
-	}
-	system("pause");
+	//system("pause");
 	return (0);
 }
+*/

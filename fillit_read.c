@@ -168,7 +168,7 @@ t_dlist *read_tetriminos(char *fname)
 		return (NULL);
 	return (figures);
 }
-
+/*
 int main()
 {
 	t_dlist *pr;
@@ -190,3 +190,4 @@ int main()
 		pr = pr->next;
 	}
 }
+*/

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 t_dlist	*ft_dlst_create_elemc(void *data, size_t n)
 {

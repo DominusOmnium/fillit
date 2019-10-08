@@ -23,7 +23,12 @@ typedef struct	s_point
 	int				j;
 }				t_point;
 char		**create_square(size_t size);
+void		delete_square(char **matrix, size_t size);
 void		del_col(t_dlist *lst, size_t col);
 void		del_row(t_dlist **lst, size_t col);
 void		del_matrix(t_dlist **lst);
+void		add_row(t_dlist **matr, t_point pos, t_point *tetrimino, size_t n);
+t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr);
+void		add_row(t_dlist **matr, t_point pos, t_point *tetrimino, size_t n);
+t_dlist		*read_tetriminos(char *fname);
 #endif

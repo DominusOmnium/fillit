@@ -14,14 +14,18 @@
 
 void	ft_dlst_push_back(t_dlist **dlst, t_dlist *el)
 {
-	if (el == NULL)
+	t_dlist	*tmp;
+
+	if (el == NULL || dlst == NULL)
 		return ;
-	if (dlst == NULL)
+	if (*dlst == NULL)
 	{
 		*dlst = el;
 		return ;
 	}
-	while ((*dlst)->next != NULL)
-		*dlst = (*dlst)->next;
-	(*dlst)->next = el;
+	tmp = *dlst;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = el;
+	el->prev = tmp;
 }

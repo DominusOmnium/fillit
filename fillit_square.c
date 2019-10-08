@@ -53,6 +53,7 @@ char	**create_square(size_t size)
 			ft_memdel((void**)&res);
 			return (NULL);
 		}
+		res[i] = ft_memset(res[i], '.', size);
 		i++;
 	}
 	return (res);
