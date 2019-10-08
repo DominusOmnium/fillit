@@ -13,18 +13,57 @@
 #include "fillit.h"
 #include <stdio.h>
 
+int		find_best_col(t_dlist *matr)
+{
+	
+}
+
+int		can_fill(t_dlist *matr, char **sq)
+{
+
+}
+
+size_t	find_square(char *fname, char **sq)
+{
+	size_t	res;
+	t_dlist	*tet;
+	t_dlist	*matr;
+
+	res = read_tetriminos(fname, &tet);
+	if (res == 0)
+		return (0);
+	while (1)
+	{
+		sq = create_square(res);
+		matr = create_matrix(res, tet, sq);
+		if (can_fill(matr, sq) == 1)
+			break ;
+		delete_square(sq, res);
+		del_matrix(&matr);
+		res++;
+	}
+}
+
 int main(int ac, char **av)
 {
-	t_dlist	*tet;
-	char	**res;
+	char	**sq;
+	size_t	res;
+	size_t	i;
+	size_t	j;
 
 	if (ac != 2)
 	{
 		ft_putendl("Error");
 		return (0);
 	}
-	tet = read_tetriminos(av[1]);
-	res = find_square(tet);
+	if ((res = find_square(av[1], sq)) == 0)
+	{
+		ft_putendl("Error");
+		return (0);
+	}
+	i = 0;
+	while (i < res)
+		ft_putendl(sq[i++]);	
 	return (0);
 }
 /*

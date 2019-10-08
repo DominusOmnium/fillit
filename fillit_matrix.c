@@ -102,14 +102,12 @@ void pr(t_dlist *matr)
 	}
 }
 
-t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
+t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr, char **sq)
 {
-	char	**sq;
 	t_dlist	*matr;
 	t_dlist	*tmp;
 	size_t	n;
-	
-	sq = create_square(sq_size);
+
 	matr = NULL;
 	while (tetr != NULL)
 	{
