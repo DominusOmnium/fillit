@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 16:49:14 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 17:05:01 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ void	fill_line(t_point *tetr, t_point pos, char *str, size_t n)
 
 int		add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n)
 {
-	char	*str;
+	t_row	*row;
 	t_dlist	*tmp;
 
-	if ((str = ft_strnew(n * n)) == NULL ||
-		(tmp = ft_dlst_create_elem((void*)str)) == NULL)
+	if ((row = ft_memalloc(sizeof(t_row))) == NULL ||
+		(row->line = ft_strnew(n * n)) == NULL ||
+		(tmp = ft_dlst_create_elem((void*)row)) == NULL)
 	{
-		ft_memdel((void**)&str);
+		if (row != NULL)
+			ft_memdel((void**)&(row->line));
+		ft_memdel((void**)row);
 		return (0);
 	}
-	fill_line(tetr, pos, str, n);
+	row->n = tetr->n;
+	fill_line(tetr->points, pos, row->line, n);
 	tmp->content_size = n * n;
 	ft_dlst_push_back(matr, tmp);
 	return (1);

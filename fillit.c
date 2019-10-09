@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 15:37:15 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:26:25 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		find_best_col(t_dlist *matr, size_t n)
 	{
 		i = -1;
 		while (++i < n)
-			if (((char*)matr->content)[i] == '1')
+			if ((((t_row*)matr->content)->line)[i] == '1')
 				sums[i]++;
 	}
 	i = -1;
@@ -42,7 +42,7 @@ int		find_best_col(t_dlist *matr, size_t n)
 	return (ind);
 }
 
-void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
+void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 {
 	int		ind[4];
 	size_t	i;
@@ -51,17 +51,17 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
 
 	i = -1;
 	j = 0;
-	ft_dlst_push_front(answ, row);
+	ft_dlst_push_front(answ, ft_dlst_popi(matr, i));
 	while (++i < (*answ)->content_size)
-		if (((char*)((*answ)->content))[i] == '1')
+		if ((((t_row*)((*answ)->content))->line)[i] == '1')
 			ind[j++] = i;
 	tmp = *matr;
 	while ((tmp = tmp->next) != NULL)
 	{
-		if (((char*)tmp->content)[ind[0]] == '1' ||
-			((char*)tmp->content)[ind[1]] == '1' ||
-			((char*)tmp->content)[ind[2]] == '1' ||
-			((char*)tmp->content)[ind[3]] == '1')
+		if ((((t_row*)(tmp->content))->line)[ind[0]] == '1' ||
+			(((t_row*)(tmp->content))->line)[ind[1]] == '1' ||
+			(((t_row*)(tmp->content))->line)[ind[2]] == '1' ||
+			(((t_row*)(tmp->content))->line)[ind[3]] == '1')
 		{
 			tmp->prev->next = tmp->next;
 			tmp->next->prev = tmp->prev;
@@ -91,10 +91,10 @@ int		can_fill(t_dlist **matr, char **sq, t_dlist **answ, size_t n)
 	tmp = *matr;
 	while (tmp != NULL)
 	{
-		if (((char*)tmp->content)[col] == '1')
+		if ((((t_row*)tmp->content)->line)[col] == '1')
 		{
 			tmp->prev = NULL;
-			remove_rows(matr, &removed, answ, tmp);
+			remove_rows(matr, &removed, answ, ((t_row*)tmp->content)->n);
 			if (can_fill(matr, sq, answ, n) == 1)
 				break ;
 			else
