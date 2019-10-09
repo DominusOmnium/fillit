@@ -35,6 +35,7 @@ int		add_row(t_dlist **matr, t_point pos, t_point *tetr, size_t n)
 			str[i] = '0';
 		i--;
 	}
+	tmp->content_size = n * n;
 	ft_dlst_push_back(matr, tmp);
 	return (1);
 }

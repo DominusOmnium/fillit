@@ -40,12 +40,37 @@ int		find_best_col(t_dlist *matr, size_t n)
 	return (ind);
 }
 
-t_dlist	*remove_rows(t_dlist **matr, size_t row)
+t_dlist	*remove_rows(t_dlist **matr, t_dlist **removed, size_t row)
 {
+	int		ind[4];
+	size_t	i;
+	size_t	j;
+	t_dlist	*tmp;
 
+	i = 0;
+	j = 0;
+	tmp = ft_dlst_geti(*matr, row);
+	while (i < tmp->content_size)
+	{
+		if (((char*)(tmp->content))[i] == '1')
+			ind[j++] = i;
+		i++;
+	}
+	while ((tmp = tmp->next) != NULL)
+	{
+		if (((char*)tmp->content)[ind[0]] == '1' ||
+			((char*)tmp->content)[ind[1]] == '1' ||
+			((char*)tmp->content)[ind[2]] == '1' ||
+			((char*)tmp->content)[ind[3]] == '1')
+			{
+				tmp->prev->next = tmp->next;
+				tmp->next->prev = tmp->prev;
+				ft_dlst_push_front(removed, tmp);
+			}
+	}
 }
 
-int		can_fill(t_dlist *matr, char **sq, size_t n)
+int		can_fill(t_dlist *matr, char **sq, t_dlist **resh, size_t n)
 {
 	size_t	col;
 	t_dlist	*removed;

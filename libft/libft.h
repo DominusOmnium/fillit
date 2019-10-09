@@ -114,4 +114,5 @@ void			ft_dlst_push_front(t_dlist **dlst, t_dlist *el);
 void			ft_dlst_push_back(t_dlist **dlst, t_dlist *el);
 int				ft_dlst_deli(t_dlist **dlst, size_t i);
 void			ft_dlst_delete(t_dlist **dlst);
+t_dlist			*ft_dlst_geti(t_dlist *dlst, size_t i);
 #endif
