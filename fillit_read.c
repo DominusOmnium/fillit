@@ -6,14 +6,14 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/08 22:57:32 by marvin           ###   ########.fr       */
+/*   Updated: 2019/10/09 12:07:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-int	check(t_point *m_point)
+int		check(t_point *m_point)
 {
 	int c;
 
@@ -65,14 +65,12 @@ void	push_tetriminos(t_dlist **figures, t_point *m_point)
 	}
 }
 
-int check_figure(t_dlist **figures, char *str)
+t_point	*check_simbols(char *str, t_point *m_point)
 {
-	t_point	*m_point;
-	int		i;
-	int		j;
-	int		c;
-	
-	m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4);
+	int i;
+	int j;
+	int c;
+
 	i = 0;
 	c = 0;
 	while (i < 4)
@@ -81,17 +79,31 @@ int check_figure(t_dlist **figures, char *str)
 		while (j < 4)
 		{
 			if (str[4 * i + j] != '#' && str[4 * i + j] != '.')
-				return (-1);
+				return (NULL);
 			if (str[4 * i + j] == '#')
 			{
 				m_point[c].i = i;
-				m_point[c].j = j;
-				c++;
+				m_point[c++].j = j;
 			}
 			j++;
 		}
 		i++;
 	}
+	if (c != 4)
+		return (NULL);
+	return (m_point);
+}
+
+int		check_figure(t_dlist **figures, char *str)
+{
+	t_point	*m_point;
+	int		i;
+	int		j;
+	int		c;
+	
+	m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4);
+	if ((m_point = check_simbols(str, m_point)) == NULL)
+		return (-1);
 	c = 0;
 	i = m_point[0].i;
 	j = m_point[0].j;
@@ -108,18 +120,18 @@ int check_figure(t_dlist **figures, char *str)
 	return (0);
 }
 
-int	fillit_read(t_dlist **figures, char *fname)
+size_t	read_tetriminos(char *fname, t_dlist **figures)
 {
 	int		fd;
 	int		i;
-	int		res;
+	size_t	res;
 	char	*str;
 	char	*new;
 	
 	res = 0;
 	str = ft_strnew(16);
-	fd = open(fname, O_RDONLY);
-	
+	if ((fd = open(fname, O_RDONLY)) == -1)
+		return (0);
 	new = str;
 	while (1)
 	{
@@ -130,30 +142,20 @@ int	fillit_read(t_dlist **figures, char *fname)
 			if (read(fd, str, 6) == 0)
 				return (res);
 			if (str[4] != 10)
-				return (-1);
+				return (0);
 			str += 4;
 			i++;
 		}
 		if (check_figure(figures, new) == -1)
-			return (-1);
+			return (0);
 		else
 			res++;
 		if (read(fd, str, 1) != 0 && *str != '\n')
-			return (-1);
+			return (0);
 	}
 }
 
-size_t read_tetriminos(char *fname, t_dlist **figures)
-{
-	size_t res;
-	
-	res = (size_t)fillit_read(figures, fname);
-	if (res == -1)
-		return (0);
-	return (res);
-}
-
-/*int main()
+int main()
 {
 	size_t res;
 	t_dlist *figures;
@@ -164,7 +166,7 @@ size_t read_tetriminos(char *fname, t_dlist **figures)
 
 	res = read_tetriminos(fname, &figures);
 	printf("%d\n", res);
-	int i = 0;
+	/*int i = 0;
 	pr = figures;
 	while (pr != NULL)
 	{
@@ -177,6 +179,7 @@ size_t read_tetriminos(char *fname, t_dlist **figures)
 			printf("%d\n", ((t_point*)(pr->content))[j].j);
 			j++;
 		}
+		printf("\n");
 		pr = pr->next;
-	}
-}*/
+	}*/
+}

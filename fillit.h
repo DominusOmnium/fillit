@@ -29,7 +29,7 @@ void		del_row(t_dlist **lst, size_t col);
 void		del_matrix(t_dlist **lst);
 int			add_row(t_dlist **matr, t_point pos, t_point *tetrimino, size_t n);
 t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr, char **sq);
-//size_t		read_tetriminos(char *fname, t_dlist **figures);
-t_dlist		*read_tetriminos(char *fname);
+size_t		read_tetriminos(char *fname, t_dlist **figures);
+//t_dlist		*read_tetriminos(char *fname);
 void		pr(t_dlist *matr);
 #endif
