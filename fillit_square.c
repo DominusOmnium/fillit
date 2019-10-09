@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 19:56:57 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 13:52:20 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:47:05 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**create_square(size_t size)
 	return (res);
 }
 
-void	delete_square(char **matrix, size_t size)
+void	delete_square(char ***matrix, size_t size)
 {
 	while (--size >= 0)
 		ft_memdel((void**)&(matrix[size]));

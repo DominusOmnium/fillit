@@ -6,25 +6,17 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 13:53:32 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 16:49:14 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		add_row(t_dlist **matr, t_point pos, t_point *tetr, size_t n)
+void	fill_line(t_point *tetr, t_point pos, char *str, size_t n)
 {
 	int		i;
-	char	*str;
-	t_dlist	*tmp;
 
 	i = n * n - 1;
-	if (!(str = ft_strnew(n * n)) ||
-		!(tmp = ft_dlst_create_elem((void*)str)))
-	{
-		ft_memdel((void**)&str);
-		return (0);
-	}
 	while (i >= 0)
 	{
 		if ((tetr[0].i + pos.i) * n + (tetr[0].j + pos.j) == i ||
@@ -36,14 +28,23 @@ int		add_row(t_dlist **matr, t_point pos, t_point *tetr, size_t n)
 			str[i] = '0';
 		i--;
 	}
+}
+
+int		add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n)
+{
+	char	*str;
+	t_dlist	*tmp;
+
+	if ((str = ft_strnew(n * n)) == NULL ||
+		(tmp = ft_dlst_create_elem((void*)str)) == NULL)
+	{
+		ft_memdel((void**)&str);
+		return (0);
+	}
+	fill_line(tetr, pos, str, n);
 	tmp->content_size = n * n;
 	ft_dlst_push_back(matr, tmp);
 	return (1);
-}
-
-void	del_row(t_dlist **lst, size_t row)
-{
-	ft_dlst_deli(lst, row);
 }
 
 void	del_matrix(t_dlist **lst)

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:02:24 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/09 13:50:22 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:16:20 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ t_dlist			*ft_dlst_create_elem(void *data);
 t_dlist			*ft_dlst_create_elemc(void *data, size_t n);
 void			ft_dlst_push_front(t_dlist **dlst, t_dlist *el);
 void			ft_dlst_push_back(t_dlist **dlst, t_dlist *el);
-int				ft_dlst_deli(t_dlist **dlst, size_t i);
 void			ft_dlst_delete(t_dlist **dlst);
+int				ft_dlst_deli(t_dlist **dlst, size_t i);
 t_dlist			*ft_dlst_geti(t_dlist *dlst, size_t i);
+t_dlist			*ft_dlst_popi(t_dlist **dlst, size_t i);
 #endif

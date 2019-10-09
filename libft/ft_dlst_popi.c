@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlst_deli.c                                     :+:      :+:    :+:   */
+/*   ft_dlst_popi.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 14:25:15 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/09 14:16:02 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:17:16 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_dlst_deli(t_dlist **dlst, size_t i)
+t_dlist	*ft_dlst_popi(t_dlist **dlst, size_t i)
 {
 	t_dlist	*tmp;
 
-	tmp = ft_dlst_popi(dlst, i);
-	if (tmp == NULL)
-		return (-1);
-	ft_memdel((void **)&(tmp->content));
-	ft_memdel((void **)&tmp);
-	return (1);
+	if (dlst == NULL)
+		return (NULL);
+	if (i == 0)
+	{
+		tmp = *dlst;
+		*dlst = (*dlst)->next;
+		(*dlst)->prev = NULL;
+		return (tmp);
+	}
+	tmp = *dlst;
+	while (i-- > 0)
+	{
+		if (tmp->next == NULL)
+			return (0);
+		tmp = tmp->next;
+	}
+	tmp->prev->next = tmp->next;
+	tmp->next->prev = tmp->prev;
+	return (tmp);
 }

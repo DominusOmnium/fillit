@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 13:55:28 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/09 16:44:59 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		can_be_placed(char **sq, size_t sq_s, t_point *tetr, t_point pos)
 	return (1);
 }
 
-t_dlist	*tetr_pos(char **square, size_t sq_size, t_point *tetr, size_t n)
+t_dlist	*tetr_pos(char **square, size_t sq_size, t_figure *tetr, size_t n)
 {
 	t_dlist	*res;
 	size_t	i;
@@ -46,7 +46,7 @@ t_dlist	*tetr_pos(char **square, size_t sq_size, t_point *tetr, size_t n)
 			pos.i = i;
 			pos.j = j;
 			f = 0;
-			if (can_be_placed(square, sq_size, tetr, pos) == 1)
+			if (can_be_placed(square, sq_size, tetr->points, pos) == 1)
 				while (f++ < n)
 					add_row(&res, pos, tetr, sq_size);
 			j++;
