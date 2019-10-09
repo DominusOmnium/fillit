@@ -13,34 +13,68 @@
 #include "fillit.h"
 #include <stdio.h>
 
-int		find_best_col(t_dlist *matr)
+int		find_best_col(t_dlist *matr, size_t n)
 {
-	
+	size_t	i;
+	size_t	min;
+	size_t	ind;
+	int		*sums;
+
+	if ((sums = (int*)ft_memalloc(n * sizeof(int))) == NULL)
+		return (-1);
+	while (matr != NULL)
+	{
+		i = -1;
+		while (++i < n)
+			if (((char*)matr->content)[i] == '1')
+				sums[i]++;
+	}
+	i = -1;
+	min = -1;
+	while (++i < n)
+		if (sums[i] < min)
+		{
+			min = sums[i];
+			ind = i;
+		}
+	return (ind);
 }
 
-int		can_fill(t_dlist *matr, char **sq)
+t_dlist	*remove_rows(t_dlist **matr, size_t row)
 {
+
+}
+
+int		can_fill(t_dlist *matr, char **sq, size_t n)
+{
+	size_t	col;
+	t_dlist	*removed;
+
+	while (matr != NULL)
+	{
+	}
+	removed = NULL;
 
 }
 
 size_t	find_square(char *fname, char **sq)
 {
-	size_t	res;
+	size_t	sq_size;
 	t_dlist	*tet;
 	t_dlist	*matr;
 
-	res = read_tetriminos(fname, &tet);
-	if (res == 0)
+	sq_size = read_tetriminos(fname, &tet);
+	if (sq_size == 0)
 		return (0);
 	while (1)
 	{
-		sq = create_square(res);
-		matr = create_matrix(res, tet, sq);
-		if (can_fill(matr, sq) == 1)
+		sq = create_square(sq_size);
+		matr = create_matrix(sq_size, tet, sq);
+		if (can_fill(matr, sq, sq_size) == 1)
 			break ;
-		delete_square(sq, res);
+		delete_square(sq, sq_size);
 		del_matrix(&matr);
-		res++;
+		sq_size++;
 	}
 }
 
@@ -66,30 +100,21 @@ int main(int ac, char **av)
 		ft_putendl(sq[i++]);	
 	return (0);
 }
+
 /*
 int main(int ac, char **av)
 {
-	t_point *t;
 	t_dlist *tet;
 	t_dlist *matr;
 	t_dlist *row;
 	t_dlist *tmp;
+	char	**sq;
 
 	tet = read_tetriminos("in.txt");
-	matr = create_matrix(2, tet);
+	matr = create_matrix(3, tet, sq);
 	tmp = matr;
 	
-	while (tmp != NULL)
-	{
-		row = (t_dlist *)(tmp->content);
-		while (row != NULL)
-		{
-			printf("%c", *((char*)(row->content)));
-			row = row->next;
-		}
-		printf("\n");
-		tmp = tmp->next;
-	}
+	pr(matr);
 	//system("pause");
 	return (0);
 }

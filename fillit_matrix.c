@@ -85,19 +85,12 @@ t_dlist	*tetr_pos(char **square, size_t sq_size, t_point *tetr, size_t n)
 void pr(t_dlist *matr)
 {
 	t_dlist *tmp;
-	t_dlist *row;
 	
 	tmp = matr;
 	
 	while (tmp != NULL)
 	{
-		row = (t_dlist *)(tmp->content);
-		while (row != NULL)
-		{
-			printf("%c", *((char*)row->content));
-			row = row->next;
-		}
-		printf("\n");
+		ft_putendl((char*)(tmp->content));
 		tmp = tmp->next;
 	}
 }
