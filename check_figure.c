@@ -6,7 +6,7 @@
 /*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 13:45:47 by celva             #+#    #+#             */
-/*   Updated: 2019/10/09 14:18:44 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/09 17:56:56 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_point	*check_simbols(char *str, t_point *m_point)
 	return (m_point);
 }
 
-int		check_figure(t_dlist **figures, char *str)
+int		check_figure(t_dlist **figures, char *str, size_t count)
 {
 	t_point	*m_point;
 	int		i;

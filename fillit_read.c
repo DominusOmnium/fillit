@@ -6,7 +6,7 @@
 /*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/09 16:17:59 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/09 18:05:37 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	push_tetriminos(t_dlist **figures, t_point *m_point)
 	new = *figures;
 	while (new != NULL)
 	{
-		if (((t_point*)(new->content))[0].i == m_point[0].i &&
+		if ((((t_figure*)(new->content))->points)[0].i == m_point[0].i &&
 			((t_point*)(new->content))[0].j == m_point[0].j &&
 			((t_point*)(new->content))[1].i == m_point[1].i &&
 			((t_point*)(new->content))[1].j == m_point[1].j &&
@@ -61,7 +61,7 @@ size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 				return (0);
 			str += 4;
 		}
-		if (check_figure(figures, new) == -1)
+		if (check_figure(figures, new, (res + 1)) == -1)
 			return (0);
 		else
 			res++;
