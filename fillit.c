@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/07 14:02:52 by marvin           ###   ########.fr       */
+/*   Updated: 2019/10/09 14:01:49 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_dlist	*remove_rows(t_dlist **matr, t_dlist **removed, size_t row)
 	i = 0;
 	j = 0;
 	tmp = ft_dlst_geti(*matr, row);
+	tmp->prev->next = tmp->next;
+	tmp->next->prev = tmp->prev;
 	while (i < tmp->content_size)
 	{
 		if (((char*)(tmp->content))[i] == '1')
@@ -62,11 +64,11 @@ t_dlist	*remove_rows(t_dlist **matr, t_dlist **removed, size_t row)
 			((char*)tmp->content)[ind[1]] == '1' ||
 			((char*)tmp->content)[ind[2]] == '1' ||
 			((char*)tmp->content)[ind[3]] == '1')
-			{
-				tmp->prev->next = tmp->next;
-				tmp->next->prev = tmp->prev;
-				ft_dlst_push_front(removed, tmp);
-			}
+		{
+			tmp->prev->next = tmp->next;
+			tmp->next->prev = tmp->prev;
+			ft_dlst_push_front(removed, tmp);
+		}
 	}
 }
 
@@ -79,7 +81,6 @@ int		can_fill(t_dlist *matr, char **sq, t_dlist **resh, size_t n)
 	{
 	}
 	removed = NULL;
-
 }
 
 size_t	find_square(char *fname, char **sq)
@@ -103,7 +104,7 @@ size_t	find_square(char *fname, char **sq)
 	}
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	char	**sq;
 	size_t	res;
@@ -122,25 +123,6 @@ int main(int ac, char **av)
 	}
 	i = 0;
 	while (i < res)
-		ft_putendl(sq[i++]);	
+		ft_putendl(sq[i++]);
 	return (0);
 }
-
-/*
-int main(int ac, char **av)
-{
-	t_dlist *tet;
-	t_dlist *matr;
-	t_dlist *row;
-	t_dlist *tmp;
-	char	**sq;
-
-	tet = read_tetriminos("in.txt");
-	matr = create_matrix(3, tet, sq);
-	tmp = matr;
-	
-	pr(matr);
-	//system("pause");
-	return (0);
-}
-*/

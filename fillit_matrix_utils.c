@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_matrix.c                                    :+:      :+:    :+:   */
+/*   fillit_matrix_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/07 18:05:06 by marvin           ###   ########.fr       */
+/*   Updated: 2019/10/09 13:53:32 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		add_row(t_dlist **matr, t_point pos, t_point *tetr, size_t n)
 	t_dlist	*tmp;
 
 	i = n * n - 1;
-	if (!(str = ft_strnew(n * n)) || !(tmp = ft_dlst_create_elem((void*)str)))
+	if (!(str = ft_strnew(n * n)) ||
+		!(tmp = ft_dlst_create_elem((void*)str)))
 	{
 		ft_memdel((void**)&str);
 		return (0);
