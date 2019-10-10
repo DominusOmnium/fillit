@@ -6,14 +6,14 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 17:09:18 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/10 11:23:01 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-int		can_be_placed(char **sq, size_t sq_s, t_point *tetr, t_point pos)
+int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
 {
 	size_t i;
 
@@ -21,14 +21,14 @@ int		can_be_placed(char **sq, size_t sq_s, t_point *tetr, t_point pos)
 	while (i < 4)
 	{
 		if (pos.i + tetr[i].i >= sq_s || pos.i + tetr[i].i < 0 ||
-			pos.j + tetr[i].j >= sq_s || pos.j + tetr[i].j < 0)
+			pos.j + tetr[i].j >= sq_s || pos.j + tetr[i].j < 0)	
 			return (0);
 		i++;
-	}
+	}	
 	return (1);
 }
 
-t_dlist	*tetr_pos(char **square, size_t sq_size, t_figure *tetr, int n)
+t_dlist	*tetr_pos(size_t sq_size, t_figure *tetr, int n)
 {
 	t_dlist	*res;
 	size_t	i;
@@ -45,14 +45,15 @@ t_dlist	*tetr_pos(char **square, size_t sq_size, t_figure *tetr, int n)
 		{
 			pos.i = i;
 			pos.j = j;
-			f = 0;
-			if (can_be_placed(square, sq_size, tetr->points, pos) == 1)
-				while (--n >= 0)
-					add_row(&res, pos, tetr + n, sq_size);
+			f = -1;
+			if (can_be_placed(sq_size, tetr->points, pos) == 1)
+				while (++f < n) 
+					add_row(&res, pos, tetr + f, sq_size);
 			j++;
 		}
 		i++;
 	}
+	pr(res);
 	return (res);
 }
 
@@ -68,7 +69,7 @@ void	pr(t_dlist *matr)
 	}
 }
 
-t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr, char **sq)
+t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 {
 	t_dlist	*matr;
 	t_dlist	*tmp;
@@ -77,7 +78,7 @@ t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr, char **sq)
 	matr = NULL;
 	while (tetr != NULL)
 	{
-		ft_dlst_push_back(&matr, tetr_pos(sq, sq_size, tetr->content,
+		ft_dlst_push_back(&matr, tetr_pos(sq_size, tetr->content,
 											tetr->content_size));
 		tetr = tetr->next;
 	}

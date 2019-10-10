@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/09 17:58:40 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/10 11:19:03 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char		**create_square(size_t size);
 void		delete_square(char ***matrix, size_t size);
 void		del_matrix(t_dlist **lst);
 int			add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n);
-t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr, char **sq);
+t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr);
 size_t		read_tetriminos(char *fname, t_dlist **figures);
 int			is_correct_figure(t_point *m_point);
 t_point		*check_simbols(char *str, t_point *m_point);

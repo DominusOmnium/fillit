@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 18:26:25 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/10 11:24:30 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		can_fill(t_dlist **matr, char **sq, t_dlist **answ, size_t n)
 				add_rows(matr, &removed, answ);
 		tmp = tmp->next;
 	}
+	return (0);
 }
 /*
 size_t	find_square(char *fname, char ***sq)
@@ -143,8 +144,8 @@ int main()
 	f->points[3].j = 1;
 	tet = ft_dlst_create_elem(f);
 	tet->content_size = 1;
-	matr = create_matrix(4, tet, sq);
-	pr(matr);
+	matr = create_matrix(4, tet);
+	//pr(matr);
 	return (0);
 }
 /*
