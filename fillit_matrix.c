@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/10 11:23:01 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/10 11:38:54 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_dlist	*tetr_pos(size_t sq_size, t_figure *tetr, int n)
 		}
 		i++;
 	}
-	pr(res);
 	return (res);
 }
 

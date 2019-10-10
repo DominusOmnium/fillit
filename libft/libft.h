@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:02:24 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/09 14:16:20 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/10 12:58:28 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,5 @@ void			ft_dlst_delete(t_dlist **dlst);
 int				ft_dlst_deli(t_dlist **dlst, size_t i);
 t_dlist			*ft_dlst_geti(t_dlist *dlst, size_t i);
 t_dlist			*ft_dlst_popi(t_dlist **dlst, size_t i);
+int				ft_dlst_len(t_dlist *dlst);
 #endif

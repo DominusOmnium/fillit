@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 17:05:01 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/10 13:14:34 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ int		add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n)
 		return (0);
 	}
 	row->n = tetr->n;
+	row->line_len = n * n;
 	fill_line(tetr->points, pos, row->line, n);
-	tmp->content_size = n * n;
 	ft_dlst_push_back(matr, tmp);
+	tmp->content_size = 0;
+	if (tmp-> prev != NULL)
+		tmp->content_size = tmp->prev->content_size + 1;
 	return (1);
 }
 
