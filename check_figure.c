@@ -6,7 +6,7 @@
 /*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 13:45:47 by celva             #+#    #+#             */
-/*   Updated: 2019/10/09 17:56:56 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/10 11:27:44 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		check_figure(t_dlist **figures, char *str, size_t count)
 		c++;
 	}
 	if (is_correct_figure(m_point) != -1)
-		push_tetriminos(figures, m_point);
+		push_tetriminos(figures, m_point, count);
 	else
 		return (-1);
 	return (0);
