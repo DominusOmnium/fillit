@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 #include <stdio.h>
-
+/*
 int		find_best_col(t_dlist *matr, size_t n)
 {
 	size_t	i;
@@ -41,7 +41,7 @@ int		find_best_col(t_dlist *matr, size_t n)
 	ft_memdel((void**)&sums);
 	return (ind);
 }
-
+*/
 void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 {
 	int		ind[4];
@@ -76,7 +76,7 @@ void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 	t_dlist	*tmp;
 	
 	ft_dlst_push_front(matr, ft_dlst_popi(answ, 0));
-	while ((tmp = ft_dlst_popi(rm, 0)) != -1)
+	while ((tmp = ft_dlst_popi(rm, 0)) != NULL)
 		ft_dlst_push_back(matr, tmp);
 }
 
@@ -85,25 +85,19 @@ int		can_fill(t_dlist **matr, char **sq, t_dlist **answ, size_t n)
 	size_t	col;
 	t_dlist	*removed;
 	t_dlist	*tmp;
-
-	if ((col = find_best_col(matr, n * n)) == -1)
-		return (0);
 	tmp = *matr;
 	while (tmp != NULL)
 	{
-		if ((((t_row*)tmp->content)->line)[col] == '1')
-		{
 			tmp->prev = NULL;
 			remove_rows(matr, &removed, answ, ((t_row*)tmp->content)->n);
 			if (can_fill(matr, sq, answ, n) == 1)
 				break ;
 			else
 				add_rows(matr, &removed, answ);
-		}
 		tmp = tmp->next;
 	}
 }
-
+/*
 size_t	find_square(char *fname, char ***sq)
 {
 	size_t	sq_size;
@@ -119,7 +113,7 @@ size_t	find_square(char *fname, char ***sq)
 		*sq = create_square(sq_size);
 		matr = create_matrix(sq_size, tet, *sq);
 		answ = NULL;
-		if (can_fill(&matr, sq, &answ, sq_size) == 1)
+		if (can_fill(&matr, *sq, &answ, sq_size) == 1)
 			break ;
 		delete_square(sq, sq_size);
 		del_matrix(&matr);
@@ -128,7 +122,32 @@ size_t	find_square(char *fname, char ***sq)
 	del_matrix(&matr);
 	return (sq_size);
 }
+*/
+int main()
+{
+	t_dlist	*tet;
+	t_figure	*f;
+	t_dlist	*matr;
+	char	**sq;
 
+	f = ft_memalloc(sizeof(t_figure));
+	f->n = 0;
+	f->points = ft_memalloc(sizeof(t_point) * 4);
+	f->points[0].i = 0;
+	f->points[0].j = 0;
+	f->points[1].i = 0;
+	f->points[1].j = 1;
+	f->points[2].i = 1;
+	f->points[2].j = 0;
+	f->points[3].i = 1;
+	f->points[3].j = 1;
+	tet = ft_dlst_create_elem(f);
+	tet->content_size = 1;
+	matr = create_matrix(4, tet, sq);
+	pr(matr);
+	return (0);
+}
+/*
 int		main(int ac, char **av)
 {
 	char	**sq;
@@ -151,3 +170,4 @@ int		main(int ac, char **av)
 		ft_putendl(sq[i++]);
 	return (0);
 }
+*/

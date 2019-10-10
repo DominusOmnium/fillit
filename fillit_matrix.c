@@ -63,7 +63,7 @@ void	pr(t_dlist *matr)
 	tmp = matr;
 	while (tmp != NULL)
 	{
-		ft_putendl((char*)(tmp->content));
+		ft_putendl(((t_row*)(tmp->content))->line);
 		tmp = tmp->next;
 	}
 }
