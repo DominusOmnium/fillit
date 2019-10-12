@@ -63,6 +63,8 @@ void	pr(t_dlist *matr)
 	tmp = matr;
 	while (tmp != NULL)
 	{
+		ft_putnbr(tmp->content_size);
+		ft_putstr(": ");
 		ft_putendl(((t_row*)(tmp->content))->line);
 		tmp = tmp->next;
 	}
@@ -82,4 +84,11 @@ t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 		tetr = tetr->next;
 	}
 	return (matr);
+}
+
+int		fillit_dlst_cmp(t_dlist *dl1, t_dlist *dl2)
+{
+	if (dl1->content_size > dl2->content_size)
+		return (1);
+	return (0);
 }

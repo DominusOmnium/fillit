@@ -99,7 +99,7 @@ size_t	read_tetriminos(char *fname, t_dlist **figures)
 		return (0);
 	return (read_tetr_cycle(str, fd, figures));
 }
-
+/*
 int main()
 {
 	size_t res;
@@ -111,7 +111,7 @@ int main()
 
 	res = read_tetriminos(fname, &figures);
 	printf("%zu\n", res);
-	/*int i = 0;
+	int i = 0;
 	pr = figures;
 	while (pr != NULL)
 	{
@@ -126,5 +126,6 @@ int main()
 	}
 	printf("\n");
 	pr = pr->next;
-	}*/
+	}
 }
+*/

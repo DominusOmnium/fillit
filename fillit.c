@@ -52,7 +52,7 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 	i = -1;
 	j = 0;
 	ft_dlst_push_front(answ, ft_dlst_popi(matr, i));
-	while (++i < (*answ)->content_size)
+	while (++i < ((t_row*)(*answ)->content)->line_len)
 		if ((((t_row*)((*answ)->content))->line)[i] == '1')
 			ind[j++] = i;
 	tmp = *matr;
@@ -61,7 +61,8 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 		if ((((t_row*)(tmp->content))->line)[ind[0]] == '1' ||
 			(((t_row*)(tmp->content))->line)[ind[1]] == '1' ||
 			(((t_row*)(tmp->content))->line)[ind[2]] == '1' ||
-			(((t_row*)(tmp->content))->line)[ind[3]] == '1')
+			(((t_row*)(tmp->content))->line)[ind[3]] == '1' ||
+			((t_row*)(tmp->content))->n == ((t_row*)(*answ)->content)->n)
 		{
 			tmp->prev->next = tmp->next;
 			tmp->next->prev = tmp->prev;
@@ -75,9 +76,37 @@ void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 {
 	t_dlist	*tmp;
 	
-	ft_dlst_push_front(matr, ft_dlst_popi(answ, 0));
+	tmp = ft_dlst_popi(answ, 0);
+	while ()
 	while ((tmp = ft_dlst_popi(rm, 0)) != NULL)
 		ft_dlst_push_back(matr, tmp);
+}
+
+int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
+{
+	size_t	i;
+	
+	i = 1;
+	while (i <= not)
+	{
+		while (matr != NULL)
+		{
+			if (((t_row*)(matr->content))->n == i)
+				break;
+			matr = matr->next;
+		}
+		if (matr == NULL)
+			while (answ != NULL)
+			{
+				if (((t_row*)(answ->content))->n == i)
+					break;
+				answ = answ->next;
+			}
+		if (matr == NULL && answ == NULL)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
@@ -87,7 +116,13 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 	t_dlist	*tmp;
 	
 	tmp = *matr;
-	//if (ft_dlst_len(tmp) == 0 &&)              TO DO
+	if (is_correct_matr(tmp, *answ, not) == 1)
+	{
+		if (ft_dlst_len(tmp) == 0)
+			return (1);
+	}
+	else
+		return (0);
 	while (tmp != NULL)
 	{
 			tmp->prev = NULL;
@@ -137,19 +172,33 @@ size_t	find_square(char *fname, char ***sq)
 		sq_size++;
 	}
 	del_matrix(&matr);
+	pr(answ);
 	return (sq_size);
 }
 
 int main(int ac, char **av)
 {
 	t_dlist	*tet;
-	t_figure	*f;
 	t_dlist	*matr;
 	char	**sq;
 	int res;
 
-	
-	res = find_square(av[1], sq);
+	t_figure *f = ft_memalloc(sizeof(t_figure));
+	f->n = 0;
+	f->points = ft_memalloc(sizeof(t_point) * 4);
+	f->points[0].i = 0;
+	f->points[0].j = 0;
+	f->points[1].i = 0;
+	f->points[1].j = 1;
+	f->points[2].i = 1;
+	f->points[2].j = 0;
+	f->points[3].i = 1;
+	f->points[3].j = 1;
+	tet = ft_dlst_create_elem(f);
+	tet->content_size = 1;
+	matr = create_matrix(4, tet);
+	pr(matr);
+	//res = find_square(av[1], &sq);
 	return (0);
 }
 /*
