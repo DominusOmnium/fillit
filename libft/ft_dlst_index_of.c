@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlst_push_front.c                               :+:      :+:    :+:   */
+/*   ft_dlst_deli.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/26 13:51:27 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/09 15:34:15 by dkathlee         ###   ########.fr       */
+/*   Created: 2019/09/26 14:25:15 by dkathlee          #+#    #+#             */
+/*   Updated: 2019/10/05 13:04:20 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_dlst_push_front(t_dlist **dlst, t_dlist *el)
+int	ft_dlst_index_of(t_dlist *dl, t_dlist *el)
 {
-	if (el == NULL || dlst == NULL)
-		return ;
-	if (*dlst == NULL)
+	int	i;
+
+	i = 0;
+	if (dl == NULL || el == NULL)
+		return (-1);
+	while (dl != NULL)
 	{
-		*dlst = el;
-		el->next = NULL;
-		el->prev = NULL;
-		return ;
+		if (dl == el)
+			break ;
+		i++;
+		dl = dl->next;
 	}
-	el->next = *dlst;
-	el->prev = NULL;
-	(*dlst)->prev = el;
-	*dlst = el;
+	return (i);
 }

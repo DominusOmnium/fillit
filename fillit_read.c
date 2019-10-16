@@ -28,17 +28,17 @@ void	push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 {
 	t_dlist	*new;
 
-	new = *figures;
+	/*new = *figures;
 	while (new != NULL)
 	{
-		if ((((t_figure*)(new->content))->points)[0].i == m_point[0].i &&
-			(((t_figure*)(new->content))->points)[0].j == m_point[0].j &&
-			(((t_figure*)(new->content))->points)[1].i == m_point[1].i &&
-			(((t_figure*)(new->content))->points)[1].j == m_point[1].j &&
-			(((t_figure*)(new->content))->points)[2].i == m_point[2].i &&
-			(((t_figure*)(new->content))->points)[2].j == m_point[2].j &&
-			(((t_figure*)(new->content))->points)[3].i == m_point[3].i &&
-			(((t_figure*)(new->content))->points)[3].j == m_point[3].j)
+		if (((t_point*)(new->content))[0].i == m_point[0].i &&
+			((t_point*)(new->content))[0].j == m_point[0].j &&
+			((t_point*)(new->content))[1].i == m_point[1].i &&
+			((t_point*)(new->content))[1].j == m_point[1].j &&
+			((t_point*)(new->content))[2].i == m_point[2].i &&
+			((t_point*)(new->content))[2].j == m_point[2].j &&
+			((t_point*)(new->content))[3].i == m_point[3].i &&
+			((t_point*)(new->content))[3].j == m_point[3].j)
 		{
 			ft_realloc(new->content, new->content_size * sizeof(t_figure),
 				(new->content_size + 1) * sizeof(t_figure));
@@ -54,7 +54,11 @@ void	push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 		ft_dlst_push_front(figures,
 					ft_dlst_create_elem((void*)(new_el(m_point, (int)n))));
 		(*figures)->content_size = 1;
-	}
+	}*/
+	if ((new = ft_dlst_create_elem(m_point)) == NULL)
+		return ;
+	new->content_size = n;
+	ft_dlst_push_back(figures, new);
 }
 
 size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)

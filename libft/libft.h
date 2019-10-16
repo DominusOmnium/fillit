@@ -117,4 +117,8 @@ int				ft_dlst_deli(t_dlist **dlst, size_t i);
 t_dlist			*ft_dlst_geti(t_dlist *dlst, size_t i);
 t_dlist			*ft_dlst_popi(t_dlist **dlst, size_t i);
 int				ft_dlst_len(t_dlist *dlst);
+void			ft_dlst_push_sort(t_dlist **dl, t_dlist *el,
+									int (*f)(t_dlist*, t_dlist*));
+int				ft_dlst_index_of(t_dlist *dl, t_dlist *el);
+t_dlist			*ft_dlst_pop(t_dlist **dlst, t_dlist *el);
 #endif

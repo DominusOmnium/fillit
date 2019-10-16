@@ -30,7 +30,7 @@ void	fill_line(t_point *tetr, t_point pos, char *str, size_t n)
 	}
 }
 
-int		add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n)
+int		add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n)
 {
 	t_row	*row;
 	t_dlist	*tmp;
@@ -44,11 +44,12 @@ int		add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n)
 		ft_memdel((void**)row);
 		return (0);
 	}
-	row->n = tetr->n;
+	row->n = tetr->content_size;
 	row->line_len = n * n;
-	fill_line(tetr->points, pos, row->line, n);
+	fill_line((t_point*)(tetr->content), pos, row->line, n);
 	ft_dlst_push_back(matr, tmp);
-	tmp->content_size = 0;
+	if (tmp->prev == NULL)
+		tmp->content_size = 0;
 	if (tmp-> prev != NULL)
 		tmp->content_size = tmp->prev->content_size + 1;
 	return (1);

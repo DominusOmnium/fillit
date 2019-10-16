@@ -21,6 +21,8 @@ void	ft_dlst_push_back(t_dlist **dlst, t_dlist *el)
 	if (*dlst == NULL)
 	{
 		*dlst = el;
+		el->next = NULL;
+		el->prev = NULL;
 		return ;
 	}
 	tmp = *dlst;
@@ -28,4 +30,5 @@ void	ft_dlst_push_back(t_dlist **dlst, t_dlist *el)
 		tmp = tmp->next;
 	tmp->next = el;
 	el->prev = tmp;
+	el->next = NULL;
 }

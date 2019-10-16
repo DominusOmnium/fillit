@@ -16,23 +16,26 @@ t_dlist	*ft_dlst_popi(t_dlist **dlst, size_t i)
 {
 	t_dlist	*tmp;
 
-	if (dlst == NULL)
+	if (dlst == NULL || *dlst == NULL)
 		return (NULL);
+	tmp = *dlst;
 	if (i == 0)
 	{
-		tmp = *dlst;
 		*dlst = (*dlst)->next;
-		(*dlst)->prev = NULL;
-		return (tmp);
+		if (*dlst != NULL)
+			(*dlst)->prev = NULL;
 	}
-	tmp = *dlst;
 	while (i-- > 0)
 	{
-		if (tmp->next == NULL)
-			return (0);
+		if (tmp == NULL)
+			return (NULL);
 		tmp = tmp->next;
 	}
-	tmp->prev->next = tmp->next;
-	tmp->next->prev = tmp->prev;
+	if (tmp->prev != NULL)
+		tmp->prev->next = tmp->next;
+	if (tmp->next != NULL)
+		tmp->next->prev = tmp->prev;
+	tmp->prev = NULL;
+	tmp->next = NULL;
 	return (tmp);
 }

@@ -28,15 +28,12 @@ int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
 	return (1);
 }
 
-t_dlist	*tetr_pos(size_t sq_size, t_figure *tetr, int n)
+void	tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
 {
-	t_dlist	*res;
 	size_t	i;
 	size_t	j;
-	size_t	f;
 	t_point	pos;
 
-	res = NULL;
 	i = 0;
 	while (i < sq_size)
 	{
@@ -45,15 +42,12 @@ t_dlist	*tetr_pos(size_t sq_size, t_figure *tetr, int n)
 		{
 			pos.i = i;
 			pos.j = j;
-			f = -1;
-			if (can_be_placed(sq_size, tetr->points, pos) == 1)
-				while (++f < n) 
-					add_row(&res, pos, tetr + f, sq_size);
+			if (can_be_placed(sq_size, (t_point*)(tetr->content), pos) == 1)
+					add_row(matr, pos, tetr, sq_size);
 			j++;
 		}
 		i++;
 	}
-	return (res);
 }
 
 void	pr(t_dlist *matr)
@@ -61,10 +55,14 @@ void	pr(t_dlist *matr)
 	t_dlist *tmp;
 
 	tmp = matr;
+	if (tmp == NULL)
+		ft_putendl("(null)");
 	while (tmp != NULL)
 	{
 		ft_putnbr(tmp->content_size);
-		ft_putstr(": ");
+		ft_putstr(" - ");
+		ft_putnbr(((t_row*)tmp->content)->n);
+		ft_putstr(":\t");
 		ft_putendl(((t_row*)(tmp->content))->line);
 		tmp = tmp->next;
 	}
@@ -79,8 +77,7 @@ t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 	matr = NULL;
 	while (tetr != NULL)
 	{
-		ft_dlst_push_back(&matr, tetr_pos(sq_size, tetr->content,
-											tetr->content_size));
+		tetr_pos(&matr, sq_size, tetr);
 		tetr = tetr->next;
 	}
 	return (matr);

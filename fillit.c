@@ -48,15 +48,16 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 	size_t	i;
 	size_t	j;
 	t_dlist	*tmp;
+	t_dlist	*tmp1;
 
 	i = -1;
 	j = 0;
-	ft_dlst_push_front(answ, ft_dlst_popi(matr, i));
+	ft_dlst_push_front(answ, ft_dlst_popi(matr, row));
 	while (++i < ((t_row*)(*answ)->content)->line_len)
 		if ((((t_row*)((*answ)->content))->line)[i] == '1')
 			ind[j++] = i;
 	tmp = *matr;
-	while ((tmp = tmp->next) != NULL)
+	while (tmp != NULL)
 	{
 		if ((((t_row*)(tmp->content))->line)[ind[0]] == '1' ||
 			(((t_row*)(tmp->content))->line)[ind[1]] == '1' ||
@@ -64,11 +65,13 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 			(((t_row*)(tmp->content))->line)[ind[3]] == '1' ||
 			((t_row*)(tmp->content))->n == ((t_row*)(*answ)->content)->n)
 		{
-			tmp->prev->next = tmp->next;
-			tmp->next->prev = tmp->prev;
-			tmp->prev = NULL;
+			tmp1 = tmp->next;
+			tmp = ft_dlst_pop(matr, tmp);
 			ft_dlst_push_front(rm, tmp);
+			tmp = tmp1;
 		}
+		else
+			tmp = tmp->next;
 	}
 }
 
@@ -77,9 +80,9 @@ void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 	t_dlist	*tmp;
 	
 	tmp = ft_dlst_popi(answ, 0);
-	while ()
+	ft_dlst_push_sort(matr, tmp, &fillit_dlst_cmp);
 	while ((tmp = ft_dlst_popi(rm, 0)) != NULL)
-		ft_dlst_push_back(matr, tmp);
+		ft_dlst_push_sort(matr, tmp, &fillit_dlst_cmp);
 }
 
 int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
@@ -116,6 +119,7 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 	t_dlist	*tmp;
 	
 	tmp = *matr;
+	removed = NULL;
 	if (is_correct_matr(tmp, *answ, not) == 1)
 	{
 		if (ft_dlst_len(tmp) == 0)
@@ -125,15 +129,18 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 		return (0);
 	while (tmp != NULL)
 	{
-			tmp->prev = NULL;
-			remove_rows(matr, &removed, answ, ((t_row*)tmp->content)->n);
-			if (can_fill(matr, answ, not) == 1)
-				break ;
-			else
-				add_rows(matr, &removed, answ);
+		if (tmp != )
+		remove_rows(matr, &removed, answ, ft_dlst_index_of(*matr, tmp));
+		if (can_fill(matr, answ, not) == 1)
+			break ;
+		else
+			add_rows(matr, &removed, answ);
 		tmp = tmp->next;
 	}
-	return (0);
+	if (tmp == NULL)
+		return (0);
+	else
+		return (1);
 }
 
 size_t	find_square(char *fname, char ***sq)
@@ -143,36 +150,66 @@ size_t	find_square(char *fname, char ***sq)
 	t_dlist	*matr;
 	t_dlist	*answ;
 
-	t_figure *f = ft_memalloc(sizeof(t_figure));
-	f->n = 0;
-	f->points = ft_memalloc(sizeof(t_point) * 4);
-	f->points[0].i = 0;
-	f->points[0].j = 0;
-	f->points[1].i = 0;
-	f->points[1].j = 1;
-	f->points[2].i = 1;
-	f->points[2].j = 0;
-	f->points[3].i = 1;
-	f->points[3].j = 1;
-	tet = ft_dlst_create_elem(f);
+	t_point *points = ft_memalloc(sizeof(t_point) * 4);
+	points[0].i = 0;
+	points[0].j = 0;
+	points[1].i = 1;
+	points[1].j = 0;
+	points[2].i = 1;
+	points[2].j = 1;
+	points[3].i = 1;
+	points[3].j = 2;
+	tet = ft_dlst_create_elem(points);
+	tet->content_size = 3;
+	points = ft_memalloc(sizeof(t_point) * 4);
+	points[0].i = 0;
+	points[0].j = 0;
+	points[1].i = 0;
+	points[1].j = 1;
+	points[2].i = 1;
+	points[2].j = 0;
+	points[3].i = 1;
+	points[3].j = 1;
+	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
+	tet->content_size = 2;
+	points = ft_memalloc(sizeof(t_point) * 4);
+	points[0].i = 0;
+	points[0].j = 0;
+	points[1].i = 0;
+	points[1].j = 1;
+	points[2].i = 1;
+	points[2].j = 0;
+	points[3].i = 1;
+	points[3].j = 1;
+	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
 	tet->content_size = 1;
-	sq_size = 2;
-	//sq_size = read_tetriminos(fname, &tet);
+	/*points = ft_memalloc(sizeof(t_point) * 4);
+	points[0].i = 0;
+	points[0].j = 0;
+	points[1].i = 0;
+	points[1].j = 1;
+	points[2].i = 0;
+	points[2].j = 2;
+	points[3].i = 1;
+	points[3].j = 2;
+	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
+	tet->content_size = 1;*/
+	sq_size = 1;
 	if (sq_size == 0)
 		return (0);
 	while (1)
 	{
 		*sq = create_square(sq_size);
 		matr = create_matrix(sq_size, tet);
+		pr(matr);
 		answ = NULL;
-		if (can_fill(&matr, &answ, 1) == 1)
+		if (can_fill(&matr, &answ, 3) == 1)
 			break ;
-		delete_square(sq, sq_size);
-		del_matrix(&matr);
 		sq_size++;
 	}
-	del_matrix(&matr);
+	printf("END\n");
 	pr(answ);
+	printf("END\n");
 	return (sq_size);
 }
 
@@ -196,11 +233,12 @@ int main(int ac, char **av)
 	f->points[3].j = 1;
 	tet = ft_dlst_create_elem(f);
 	tet->content_size = 1;
-	matr = create_matrix(4, tet);
-	pr(matr);
+	res = find_square(av[1], &sq);
+	//pr(matr);
 	//res = find_square(av[1], &sq);
 	return (0);
 }
+
 /*
 int		main(int ac, char **av)
 {
@@ -222,6 +260,59 @@ int		main(int ac, char **av)
 	i = 0;
 	while (i < res)
 		ft_putendl(sq[i++]);
+	return (0);
+}
+*/
+/*
+int main()
+{
+	t_dlist	*matr;
+	t_dlist	*matr1;
+	t_dlist	*tet;
+
+	matr1 = NULL;
+	t_figure *f = ft_memalloc(sizeof(t_figure));
+	f->n = 2;
+	f->points = ft_memalloc(sizeof(t_point) * 4);
+	f->points[0].i = 0;
+	f->points[0].j = 0;
+	f->points[1].i = 1;
+	f->points[1].j = 0;
+	f->points[2].i = 1;
+	f->points[2].j = 1;
+	f->points[3].i = 1;
+	f->points[3].j = 2;
+	tet = ft_dlst_create_elem(f);
+	tet->content_size = 1;
+	f = ft_memalloc(sizeof(t_figure));
+	f->n = 1;
+	f->points = ft_memalloc(sizeof(t_point) * 4);
+	f->points[0].i = 0;
+	f->points[0].j = 0;
+	f->points[1].i = 0;
+	f->points[1].j = 1;
+	f->points[2].i = 1;
+	f->points[2].j = 0;
+	f->points[3].i = 1;
+	f->points[3].j = 1;
+	ft_dlst_push_front(&tet, ft_dlst_create_elem(f));
+	tet->content_size = 1;
+	matr = create_matrix(4, tet);
+	pr(matr);
+	printf("////////////\n");
+	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 0));
+	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 1));
+	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 4));
+	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 7));
+	pr(matr1);
+	printf("////////////\n");
+	pr(matr);
+	printf("////////////\n");
+	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
+	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
+	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
+	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
+	pr(matr);
 	return (0);
 }
 */

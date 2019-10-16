@@ -37,13 +37,14 @@ typedef struct	s_row
 char		**create_square(size_t size);
 void		delete_square(char ***matrix, size_t size);
 void		del_matrix(t_dlist **lst);
-int			add_row(t_dlist **matr, t_point pos, t_figure *tetr, size_t n);
+int			add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n);
 t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr);
 size_t		read_tetriminos(char *fname, t_dlist **figures);
 int			is_correct_figure(t_point *m_point);
 t_point		*check_simbols(char *str, t_point *m_point);
 int			heck_figure(t_dlist **figures, char *str, size_t count);
 void		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n);
+int			fillit_dlst_cmp(t_dlist *dl1, t_dlist *dl2);
 
 //t_dlist		*read_tetriminos(char *fname);
 void		pr(t_dlist *matr);
