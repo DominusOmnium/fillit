@@ -6,14 +6,14 @@
 /*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/10 13:28:43 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/16 22:30:57 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
-t_figure	*new_el(t_point	*m_point, int n)
+/*t_figure	*new_el(t_point	*m_point, int n)
 {
 	t_figure *new;
 
@@ -22,9 +22,9 @@ t_figure	*new_el(t_point	*m_point, int n)
 	new->points = m_point;
 	new->n = n;
 	return (new);
-}
+}*/
 
-void	push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
+int		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 {
 	t_dlist	*new;
 
@@ -56,7 +56,7 @@ void	push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 		(*figures)->content_size = 1;
 	}*/
 	if ((new = ft_dlst_create_elem(m_point)) == NULL)
-		return ;
+		return (0);
 	new->content_size = n;
 	ft_dlst_push_back(figures, new);
 }
@@ -93,29 +93,28 @@ size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 size_t	read_tetriminos(char *fname, t_dlist **figures)
 {
 	int		fd;
-	int		i;
-	size_t	res;
 	char	*str;
-	char	*new;
 
-	str = ft_strnew(16);
+	if ((str = ft_strnew(16)) == NULL)
+		return (0);
 	if ((fd = open(fname, O_RDONLY)) == -1)
 		return (0);
 	return (read_tetr_cycle(str, fd, figures));
 }
-/*
+
 int main()
 {
 	size_t res;
 	t_dlist *figures;
-	t_dlist *pr;
+	//t_dlist *pr;
 
 	figures = NULL;
 	char fname[9] = "in.txt";
 
 	res = read_tetriminos(fname, &figures);
-	printf("%zu\n", res);
-	int i = 0;
+	printf("%ld\n", res);
+	pr(create_matrix(6, figures));
+	/*int i = 0;
 	pr = figures;
 	while (pr != NULL)
 	{
@@ -130,6 +129,6 @@ int main()
 	}
 	printf("\n");
 	pr = pr->next;
-	}
+	}*/
 }
-*/
+

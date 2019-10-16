@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/10 13:33:59 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:53:12 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ size_t		read_tetriminos(char *fname, t_dlist **figures);
 int			is_correct_figure(t_point *m_point);
 t_point		*check_simbols(char *str, t_point *m_point);
 int			heck_figure(t_dlist **figures, char *str, size_t count);
-void		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n);
+int			push_tetriminos(t_dlist **figures, t_point *m_point, size_t n);
 int			fillit_dlst_cmp(t_dlist *dl1, t_dlist *dl2);
+int			check_figure(t_dlist **figures, char *str, size_t count);
 
 //t_dlist		*read_tetriminos(char *fname);
 void		pr(t_dlist *matr);
