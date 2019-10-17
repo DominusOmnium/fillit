@@ -3,34 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   check_figure.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 13:45:47 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 14:06:14 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/17 16:25:06 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		is_correct_figure(t_point *m_point)
+int		is_correct_figure(t_point *p)
 {
 	int c;
-
+	
 	c = 0;
-	if (((ABS((m_point[0].i - m_point[1].i)) + ABS((m_point[0].j
-		- m_point[1].j))) == 1 || (ABS((m_point[0].i - m_point[2].i)) +
-		ABS((m_point[0].j - m_point[2].j))) == 1 || (ABS((m_point[0].i -
-		m_point[3].i)) + ABS((m_point[0].j - m_point[3].j))) == 1))
+	if (((ABS((p[0].i - p[1].i))) + (ABS((p[0].j - p[1].j)))) == 1)
 		c++;
-	if (((ABS((m_point[1].i - m_point[2].i)) +
-		ABS((m_point[1].j - m_point[2].j))) == 1 || (ABS((m_point[1].i -
-		m_point[3].i)) + ABS((m_point[1].j - m_point[3].j))) == 1))
+	if ((ABS((p[0].i - p[2].i))) + ((ABS((p[0].j - p[2].j)))) == 1)
 		c++;
-	if (((ABS((m_point[2].i - m_point[3].i)) +
-		ABS((m_point[2].j - m_point[3].j))) == 1))
+	if (((ABS((p[0].i - p[3].i))) + (ABS((p[0].j - p[3].j)))) == 1)
 		c++;
-	else
-		return (-1);
+	if (((ABS((p[1].i - p[2].i))) + (ABS((p[1].j - p[2].j)))) == 1)
+		c++;
+	if (((ABS((p[1].i - p[3].i))) + (ABS((p[1].j - p[3].j)))) == 1)
+		c++;
+	if (((ABS((p[2].i - p[3].i))) + (ABS((p[2].j - p[3].j)))) == 1)
+		c++;
 	if (c < 3)
 		return (-1);
 	return (c);

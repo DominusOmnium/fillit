@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 14:10:11 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 15:41:45 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 	matr = NULL;
 	while (tetr != NULL)
 	{
-		if (tetr_pos(&matr, sq_size, tetr) == 0)
-			return (NULL);
+		if (tetr_pos(&matr, sq_size, tetr) == 0){ft_putendl("7");
+			return (NULL);}
 		tetr = tetr->next;
 	}
 	return (matr);
