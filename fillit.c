@@ -6,18 +6,29 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 15:39:41 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:29:00 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include <stdio.h>
 
+int		is_removing(int ind[4], t_dlist *tmp, t_dlist *answ)
+{
+	if ((((t_row*)(tmp->content))->line)[ind[0]] == '1' ||
+		(((t_row*)(tmp->content))->line)[ind[1]] == '1' ||
+		(((t_row*)(tmp->content))->line)[ind[2]] == '1' ||
+		(((t_row*)(tmp->content))->line)[ind[3]] == '1' ||
+		((t_row*)(tmp->content))->n == ((t_row*)answ->content)->n)
+		return (1);
+	return (0);
+}
+
 void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
 {
 	int		ind[4];
-	size_t	i;
-	size_t	j;
+	int		i;
+	int		j;
 	t_dlist	*tmp;
 	t_dlist	*tmp1;
 
@@ -30,11 +41,7 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
 	tmp = *matr;
 	while (tmp != NULL)
 	{
-		if ((((t_row*)(tmp->content))->line)[ind[0]] == '1' ||
-			(((t_row*)(tmp->content))->line)[ind[1]] == '1' ||
-			(((t_row*)(tmp->content))->line)[ind[2]] == '1' ||
-			(((t_row*)(tmp->content))->line)[ind[3]] == '1' ||
-			((t_row*)(tmp->content))->n == ((t_row*)(*answ)->content)->n)
+		if (is_removing(ind, tmp, *answ) == 1)
 		{
 			tmp1 = tmp->next;
 			tmp = ft_dlst_pop(matr, tmp);
@@ -56,52 +63,17 @@ void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 		ft_dlst_push_sort(matr, tmp, &fillit_dlst_cmp);
 }
 
-int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
-{
-	size_t	i;
-	t_dlist	*tmp1;
-	t_dlist	*tmp2;
-
-	i = 1;
-	while (i <= not)
-	{
-		tmp1 = matr;
-		tmp2 = answ;
-		while (tmp1 != NULL)
-		{
-			if (((t_row*)(tmp1->content))->n == i)
-				break ;
-			tmp1 = tmp1->next;
-		}
-		if (tmp1 == NULL)
-			while (tmp2 != NULL)
-			{
-				if (((t_row*)(tmp2->content))->n == i)
-					break ;
-				tmp2 = tmp2->next;
-			}
-		if (tmp1 == NULL && tmp2 == NULL)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 {
-	size_t	col;
 	t_dlist	*removed;
 	t_dlist	*tmp;
 
 	tmp = *matr;
 	removed = NULL;
-	if (is_correct_matr(tmp, *answ, not) == 1)
-	{
-		if (ft_dlst_len(tmp) == 0)
-			return (1);
-	}
-	else
+	if (is_correct_matr(tmp, *answ, not) != 1)
 		return (0);
+	if (ft_dlst_len(tmp) == 0)
+		return (1);
 	while (tmp != NULL)
 	{
 		if (tmp && tmp->prev &&
@@ -109,7 +81,11 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 			break ;
 		remove_rows(matr, &removed, answ, tmp);
 		if (can_fill(matr, answ, not) == 1)
+		{
+			delete_matrix(&removed);
+			delete_matrix(matr);
 			return (1);
+		}
 		add_rows(matr, &removed, answ);
 		tmp = tmp->next;
 	}
@@ -124,9 +100,7 @@ size_t	find_square(char *fname, char ***sq)
 	t_dlist	*matr;
 	t_dlist	*answ;
 
-	tet = NULL;
-	not = read_tetriminos(fname, &tet);
-	if (not == 0)
+	if ((not = read_tetriminos(fname, &tet)) == 0)
 		return (0);
 	sq_size = calc_square_size(not);
 	while (1)
@@ -135,11 +109,14 @@ size_t	find_square(char *fname, char ***sq)
 		if ((matr = create_matrix(sq_size, tet)) != NULL)
 			if (can_fill(&matr, &answ, not) == 1)
 				break ;
+		delete_matrix(&matr);
+		delete_matrix(&answ);
 		sq_size++;
 	}
 	delete_matrix(&matr);
 	if ((*sq = create_square(sq_size, answ)) == NULL)
 		sq_size = 0;
+	ft_dlst_delete(&tet);
 	delete_matrix(&answ);
 	return (sq_size);
 }

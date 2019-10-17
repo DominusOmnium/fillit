@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/17 14:11:53 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:29:27 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,5 @@ int				fillit_dlst_cmp(t_dlist *dl1, t_dlist *dl2);
 int				check_figure(t_dlist **figures, char *str, size_t count);
 size_t			find_square(char *fname, char ***sq);
 size_t			calc_square_size(size_t not);
+int				is_correct_matr(t_dlist *matr, t_dlist *answ, int not);
 #endif

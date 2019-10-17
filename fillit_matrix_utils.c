@@ -6,13 +6,13 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 14:12:44 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:29:17 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	fill_line(t_point *tetr, t_point pos, char *str, size_t n)
+void	fill_line(t_point *tetr, t_point pos, char *str, int n)
 {
 	int		i;
 
@@ -67,6 +67,7 @@ void	delete_matrix(t_dlist **lst)
 		tmp = tmp->next;
 	}
 	ft_dlst_delete(lst);
+	*lst = NULL;
 }
 
 size_t	calc_square_size(size_t not)
@@ -77,4 +78,33 @@ size_t	calc_square_size(size_t not)
 	while (i * i < not * 4)
 		i++;
 	return (i);
+}
+
+int		is_correct_matr(t_dlist *matr, t_dlist *answ, int not)
+{
+	int		i;
+	t_dlist	*tmp1;
+	t_dlist	*tmp2;
+
+	i = 0;
+	while (++i <= not)
+	{
+		tmp1 = matr;
+		tmp2 = answ;
+		while (tmp1 != NULL)
+		{
+			if (((t_row*)(tmp1->content))->n == i)
+				break ;
+			tmp1 = tmp1->next;
+		}
+		while (tmp2 != NULL)
+		{
+			if (((t_row*)(tmp2->content))->n == i)
+				break ;
+			tmp2 = tmp2->next;
+		}
+		if (tmp1 == NULL && tmp2 == NULL)
+			return (0);
+	}
+	return (1);
 }

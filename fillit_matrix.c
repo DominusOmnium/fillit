@@ -6,15 +6,15 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 15:41:45 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 17:20:38 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
+int		can_be_placed(int sq_s, t_point *tetr, t_point pos)
 {
-	size_t i;
+	int i;
 
 	i = 0;
 	while (i < 4)
@@ -51,35 +51,15 @@ int		tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
 	return (1);
 }
 
-void	pr(t_dlist *matr)
-{
-	t_dlist *tmp;
-
-	tmp = matr;
-	if (tmp == NULL)
-		ft_putendl("(null)");
-	while (tmp != NULL)
-	{
-		ft_putnbr(tmp->content_size);
-		ft_putstr(" - ");
-		ft_putnbr(((t_row*)tmp->content)->n);
-		ft_putstr(":\t");
-		ft_putendl(((t_row*)(tmp->content))->line);
-		tmp = tmp->next;
-	}
-}
-
 t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 {
 	t_dlist	*matr;
-	t_dlist	*tmp;
-	size_t	n;
 
 	matr = NULL;
 	while (tetr != NULL)
 	{
-		if (tetr_pos(&matr, sq_size, tetr) == 0){ft_putendl("7");
-			return (NULL);}
+		if (tetr_pos(&matr, sq_size, tetr) == 0)
+			return (NULL);
 		tetr = tetr->next;
 	}
 	return (matr);

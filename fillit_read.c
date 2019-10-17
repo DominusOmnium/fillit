@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 16:44:44 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/17 17:14:20 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 		return (0);
 	new->content_size = n;
 	ft_dlst_push_back(figures, new);
+	return (1);
 }
 
 size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
@@ -57,15 +58,14 @@ size_t	read_tetriminos(char *fname, t_dlist **figures)
 	char	*str;
 	int		res;
 
+	*figures = NULL;
 	if ((str = ft_strnew(16)) == NULL)
 		return (0);
 	if ((fd = open(fname, O_RDONLY)) == -1)
 		return (0);
 	res = read_tetr_cycle(str, fd, figures);
 	if (res == 0)
-	{
-		free(str);
 		ft_dlst_delete(figures);
-	}
+	free(str);
 	return (res);
 }
