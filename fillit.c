@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 13:58:57 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:41:00 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
 void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 {
 	t_dlist	*tmp;
-	
+
 	tmp = ft_dlst_popi(answ, 0);
 	ft_dlst_push_sort(matr, tmp, &fillit_dlst_cmp);
 	while ((tmp = ft_dlst_popi(rm, 0)) != NULL)
@@ -61,7 +61,7 @@ int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
 	size_t	i;
 	t_dlist	*tmp1;
 	t_dlist	*tmp2;
-	
+
 	i = 1;
 	while (i <= not)
 	{
@@ -70,14 +70,14 @@ int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
 		while (tmp1 != NULL)
 		{
 			if (((t_row*)(tmp1->content))->n == i)
-				break;
+				break ;
 			tmp1 = tmp1->next;
 		}
 		if (tmp1 == NULL)
 			while (tmp2 != NULL)
 			{
 				if (((t_row*)(tmp2->content))->n == i)
-					break;
+					break ;
 				tmp2 = tmp2->next;
 			}
 		if (tmp1 == NULL && tmp2 == NULL)
@@ -92,7 +92,7 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 	size_t	col;
 	t_dlist	*removed;
 	t_dlist	*tmp;
-	
+
 	tmp = *matr;
 	removed = NULL;
 	if (is_correct_matr(tmp, *answ, not) == 1)
@@ -118,31 +118,32 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 
 size_t	find_square(char *fname, char ***sq)
 {
+	size_t	not;
 	size_t	sq_size;
 	t_dlist	*tet;
 	t_dlist	*matr;
 	t_dlist	*answ;
 
 	tet = NULL;
-	sq_size = read_tetriminos(fname, &tet);
-	sq_size = 6;
-	if (sq_size == 0)
+	not = read_tetriminos(fname, &tet);
+	sq_size = calc_square_size(not);
+	if (not == 0)
 		return (0);
 	while (1)
 	{
 		if ((matr = create_matrix(sq_size, tet)) == NULL)
 		{
-			//delete_matrix(&matr);
+			delete_matrix(&matr);
 			return (0);
 		}
 		answ = NULL;
-		if (can_fill(&matr, &answ, 9) == 1)
+		if (can_fill(&matr, &answ, not) == 1)
 			break ;
 		sq_size++;
 	}
-	//delete_matrix(&matr);
+	delete_matrix(&matr);
 	if ((*sq = create_square(sq_size, answ)) == NULL)
 		sq_size = 0;
-	//delete_matrix(&answ);
+	delete_matrix(&answ);
 	return (sq_size);
 }

@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 13:19:15 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:12:44 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n)
 	ft_dlst_push_back(matr, tmp);
 	if (tmp->prev == NULL)
 		tmp->content_size = 0;
-	if (tmp-> prev != NULL)
+	if (tmp->prev != NULL)
 		tmp->content_size = tmp->prev->content_size + 1;
 	return (1);
 }
@@ -59,7 +59,6 @@ void	delete_matrix(t_dlist **lst)
 {
 	t_dlist *tmp;
 
-	write(1, "1\n", 2);
 	tmp = *lst;
 	while (tmp != NULL)
 	{
@@ -67,6 +66,15 @@ void	delete_matrix(t_dlist **lst)
 		ft_memdel(&(tmp->content));
 		tmp = tmp->next;
 	}
-	write(1, "2\n", 2);
 	ft_dlst_delete(lst);
+}
+
+size_t	calc_square_size(size_t not)
+{
+	size_t	i;
+
+	i = 2;
+	while (i * i < not * 4)
+		i++;
+	return (i);
 }

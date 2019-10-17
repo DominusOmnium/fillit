@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/10 11:38:54 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:10:11 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
 	while (i < 4)
 	{
 		if (pos.i + tetr[i].i >= sq_s || pos.i + tetr[i].i < 0 ||
-			pos.j + tetr[i].j >= sq_s || pos.j + tetr[i].j < 0)	
+			pos.j + tetr[i].j >= sq_s || pos.j + tetr[i].j < 0)
 			return (0);
 		i++;
-	}	
+	}
 	return (1);
 }
 
@@ -42,8 +42,8 @@ int		tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
 			pos.i = i;
 			pos.j = j;
 			if (can_be_placed(sq_size, (t_point*)(tetr->content), pos) == 1)
-					if (add_row(matr, pos, tetr, sq_size) == 0)
-						return (0);
+				if (add_row(matr, pos, tetr, sq_size) == 0)
+					return (0);
 			j++;
 		}
 		i++;

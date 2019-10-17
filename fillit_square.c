@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 19:56:57 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/17 13:57:44 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:22:01 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void	print_square(char **sq, size_t size)
 void	delete_square(char ***matrix, int size)
 {
 	while (--size >= 0)
-		ft_memdel((void**)&(matrix[size]));
+		ft_memdel((void**)&((*matrix)[size]));
 	ft_memdel((void**)matrix);
 }
