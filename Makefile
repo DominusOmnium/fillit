@@ -3,31 +3,38 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+         #
+#    By: celva <celva@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 13:02:08 by dkathlee          #+#    #+#              #
-#    Updated: 2019/10/17 17:17:07 by dkathlee         ###   ########.fr        #
+#    Updated: 2019/10/17 17:41:02 by celva            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fillit.a
+NAME = fillit
 
 SRCS =	fillit.c fillit_matrix.c fillit_matrix_utils.c fillit_square.c fillit_read.c check_figure.c main.c
 
-OBJECTS = fillit.o fillit_matrix.o fillit_matrix_utils.o fillit_square.o fillit_read.o check_figure.o main.o
+OBJECTS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(OBJECTS): %.o:%.c
-	gcc -c -Wall -Wextra -Werror $<
+	@gcc -c -Wall -Wextra -Werror $<
 
-$(NAME): $(OBJECTS)
-	gcc -o fillit $(OBJECTS) libft/libft.a
+$(NAME): lib $(OBJECTS)
+	@gcc -o fillit $(OBJECTS) libft/libft.a
+
+lib:
+	@make -C libft
 
 clean:
 	@/bin/rm -f $(OBJECTS)
+	@make -C libft clean
 
 fclean: clean
 	@/bin/rm -f $(NAME)
+	@make -C libft fclean
 
 re:	fclean all
+
+.PHONY: clean fclean all re
