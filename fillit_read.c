@@ -6,7 +6,7 @@
 /*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 16:39:50 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/17 16:44:44 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,17 @@ size_t	read_tetriminos(char *fname, t_dlist **figures)
 {
 	int		fd;
 	char	*str;
+	int		res;
 
 	if ((str = ft_strnew(16)) == NULL)
 		return (0);
 	if ((fd = open(fname, O_RDONLY)) == -1)
 		return (0);
-	return (read_tetr_cycle(str, fd, figures));
+	res = read_tetr_cycle(str, fd, figures);
+	if (res == 0)
+	{
+		free(str);
+		ft_dlst_delete(figures);
+	}
+	return (res);
 }
