@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
 {
@@ -28,7 +27,7 @@ int		can_be_placed(size_t sq_s, t_point *tetr, t_point pos)
 	return (1);
 }
 
-void	tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
+int		tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
 {
 	size_t	i;
 	size_t	j;
@@ -43,11 +42,13 @@ void	tetr_pos(t_dlist **matr, size_t sq_size, t_dlist *tetr)
 			pos.i = i;
 			pos.j = j;
 			if (can_be_placed(sq_size, (t_point*)(tetr->content), pos) == 1)
-					add_row(matr, pos, tetr, sq_size);
+					if (add_row(matr, pos, tetr, sq_size) == 0)
+						return (0);
 			j++;
 		}
 		i++;
 	}
+	return (1);
 }
 
 void	pr(t_dlist *matr)
@@ -77,7 +78,8 @@ t_dlist	*create_matrix(size_t sq_size, t_dlist *tetr)
 	matr = NULL;
 	while (tetr != NULL)
 	{
-		tetr_pos(&matr, sq_size, tetr);
+		if (tetr_pos(&matr, sq_size, tetr) == 0)
+			return (NULL);
 		tetr = tetr->next;
 	}
 	return (matr);

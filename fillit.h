@@ -34,9 +34,10 @@ typedef struct	s_row
 	int		n;
 }				t_row;
 
-char		**create_square(size_t size);
+char		**create_square(size_t size, t_dlist *answ);
+void		print_square(char **sq, size_t size);
 void		delete_square(char ***matrix, size_t size);
-void		del_matrix(t_dlist **lst);
+void		delete_matrix(t_dlist **lst);
 int			add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n);
 t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr);
 size_t		read_tetriminos(char *fname, t_dlist **figures);
@@ -46,7 +47,7 @@ int			heck_figure(t_dlist **figures, char *str, size_t count);
 int			push_tetriminos(t_dlist **figures, t_point *m_point, size_t n);
 int			fillit_dlst_cmp(t_dlist *dl1, t_dlist *dl2);
 int			check_figure(t_dlist **figures, char *str, size_t count);
+size_t		find_square(char *fname, char ***sq);
 
-//t_dlist		*read_tetriminos(char *fname);
 void		pr(t_dlist *matr);
 #endif

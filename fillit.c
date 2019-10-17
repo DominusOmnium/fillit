@@ -12,37 +12,8 @@
 
 #include "fillit.h"
 #include <stdio.h>
-/*
-int		find_best_col(t_dlist *matr, size_t n)
-{
-	size_t	i;
-	size_t	min;
-	int		ind;
-	int		*sums;
 
-	if ((sums = (int*)ft_memalloc(n * sizeof(int))) == NULL)
-		return (-1);
-	while (matr != NULL)
-	{
-		i = -1;
-		while (++i < n)
-			if ((((t_row*)matr->content)->line)[i] == '1')
-				sums[i]++;
-	}
-	i = -1;
-	min = -1;
-	ind = -1;
-	while (++i < n)
-		if (sums[i] != 0 && sums[i] < min)
-		{
-			min = sums[i];
-			ind = i;
-		}
-	ft_memdel((void**)&sums);
-	return (ind);
-}
-*/
-void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
+void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, t_dlist *row)
 {
 	int		ind[4];
 	size_t	i;
@@ -52,9 +23,9 @@ void	remove_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ, int row)
 
 	i = -1;
 	j = 0;
-	ft_dlst_push_front(answ, ft_dlst_popi(matr, row));
-	while (++i < ((t_row*)(*answ)->content)->line_len)
-		if ((((t_row*)((*answ)->content))->line)[i] == '1')
+	ft_dlst_push_front(answ, ft_dlst_pop(matr, row));
+	while (++i < ((t_row*)(row->content))->line_len)
+		if ((((t_row*)((row->content)))->line)[i] == '1')
 			ind[j++] = i;
 	tmp = *matr;
 	while (tmp != NULL)
@@ -88,24 +59,28 @@ void	add_rows(t_dlist **matr, t_dlist **rm, t_dlist **answ)
 int		is_correct_matr(t_dlist *matr, t_dlist *answ, size_t not)
 {
 	size_t	i;
+	t_dlist	*tmp1;
+	t_dlist	*tmp2;
 	
 	i = 1;
 	while (i <= not)
 	{
-		while (matr != NULL)
+		tmp1 = matr;
+		tmp2 = answ;
+		while (tmp1 != NULL)
 		{
-			if (((t_row*)(matr->content))->n == i)
+			if (((t_row*)(tmp1->content))->n == i)
 				break;
-			matr = matr->next;
+			tmp1 = tmp1->next;
 		}
-		if (matr == NULL)
-			while (answ != NULL)
+		if (tmp1 == NULL)
+			while (tmp2 != NULL)
 			{
-				if (((t_row*)(answ->content))->n == i)
+				if (((t_row*)(tmp2->content))->n == i)
 					break;
-				answ = answ->next;
+				tmp2 = tmp2->next;
 			}
-		if (matr == NULL && answ == NULL)
+		if (tmp1 == NULL && tmp2 == NULL)
 			return (0);
 		i++;
 	}
@@ -129,18 +104,16 @@ int		can_fill(t_dlist **matr, t_dlist **answ, size_t not)
 		return (0);
 	while (tmp != NULL)
 	{
-		if (tmp != )
-		remove_rows(matr, &removed, answ, ft_dlst_index_of(*matr, tmp));
-		if (can_fill(matr, answ, not) == 1)
+		if (tmp && tmp->prev &&
+			((t_row*)tmp->content)->n != ((t_row*)tmp->prev->content)->n)
 			break ;
-		else
-			add_rows(matr, &removed, answ);
+		remove_rows(matr, &removed, answ, tmp);
+		if (can_fill(matr, answ, not) == 1)
+			return (1);
+		add_rows(matr, &removed, answ);
 		tmp = tmp->next;
 	}
-	if (tmp == NULL)
-		return (0);
-	else
-		return (1);
+	return (0);
 }
 
 size_t	find_square(char *fname, char ***sq)
@@ -150,169 +123,24 @@ size_t	find_square(char *fname, char ***sq)
 	t_dlist	*matr;
 	t_dlist	*answ;
 
-	t_point *points = ft_memalloc(sizeof(t_point) * 4);
-	points[0].i = 0;
-	points[0].j = 0;
-	points[1].i = 1;
-	points[1].j = 0;
-	points[2].i = 1;
-	points[2].j = 1;
-	points[3].i = 1;
-	points[3].j = 2;
-	tet = ft_dlst_create_elem(points);
-	tet->content_size = 3;
-	points = ft_memalloc(sizeof(t_point) * 4);
-	points[0].i = 0;
-	points[0].j = 0;
-	points[1].i = 0;
-	points[1].j = 1;
-	points[2].i = 1;
-	points[2].j = 0;
-	points[3].i = 1;
-	points[3].j = 1;
-	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
-	tet->content_size = 2;
-	points = ft_memalloc(sizeof(t_point) * 4);
-	points[0].i = 0;
-	points[0].j = 0;
-	points[1].i = 0;
-	points[1].j = 1;
-	points[2].i = 1;
-	points[2].j = 0;
-	points[3].i = 1;
-	points[3].j = 1;
-	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
-	tet->content_size = 1;
-	/*points = ft_memalloc(sizeof(t_point) * 4);
-	points[0].i = 0;
-	points[0].j = 0;
-	points[1].i = 0;
-	points[1].j = 1;
-	points[2].i = 0;
-	points[2].j = 2;
-	points[3].i = 1;
-	points[3].j = 2;
-	ft_dlst_push_front(&tet, ft_dlst_create_elem(points));
-	tet->content_size = 1;*/
-	sq_size = 1;
+	sq_size = read_tetriminos(fname, &tet);
 	if (sq_size == 0)
 		return (0);
 	while (1)
 	{
-		*sq = create_square(sq_size);
-		matr = create_matrix(sq_size, tet);
-		pr(matr);
+		if ((matr = create_matrix(sq_size, tet)) == NULL)
+		{
+			delete_matrix(&matr);
+			return (0);
+		}
 		answ = NULL;
-		if (can_fill(&matr, &answ, 3) == 1)
+		if (can_fill(&matr, &answ, 4) == 1)
 			break ;
 		sq_size++;
 	}
-	printf("END\n");
-	pr(answ);
-	printf("END\n");
+	delete_matrix(&matr);
+	if (*sq = create_square(sq_size, answ) == NULL)
+		sq_size = 0;
+	delete_matrix(&answ);
 	return (sq_size);
 }
-
-int main(int ac, char **av)
-{
-	t_dlist	*tet;
-	t_dlist	*matr;
-	char	**sq;
-	int res;
-
-	t_figure *f = ft_memalloc(sizeof(t_figure));
-	f->n = 0;
-	f->points = ft_memalloc(sizeof(t_point) * 4);
-	f->points[0].i = 0;
-	f->points[0].j = 0;
-	f->points[1].i = 0;
-	f->points[1].j = 1;
-	f->points[2].i = 1;
-	f->points[2].j = 0;
-	f->points[3].i = 1;
-	f->points[3].j = 1;
-	tet = ft_dlst_create_elem(f);
-	tet->content_size = 1;
-	res = find_square(av[1], &sq);
-	//pr(matr);
-	//res = find_square(av[1], &sq);
-	return (0);
-}
-
-/*
-int		main(int ac, char **av)
-{
-	char	**sq;
-	size_t	res;
-	size_t	i;
-	size_t	j;
-
-	if (ac != 2)
-	{
-		ft_putendl("Error");
-		return (0);
-	}
-	if ((res = find_square(av[1], sq)) == 0)
-	{
-		ft_putendl("Error");
-		return (0);
-	}
-	i = 0;
-	while (i < res)
-		ft_putendl(sq[i++]);
-	return (0);
-}
-*/
-/*
-int main()
-{
-	t_dlist	*matr;
-	t_dlist	*matr1;
-	t_dlist	*tet;
-
-	matr1 = NULL;
-	t_figure *f = ft_memalloc(sizeof(t_figure));
-	f->n = 2;
-	f->points = ft_memalloc(sizeof(t_point) * 4);
-	f->points[0].i = 0;
-	f->points[0].j = 0;
-	f->points[1].i = 1;
-	f->points[1].j = 0;
-	f->points[2].i = 1;
-	f->points[2].j = 1;
-	f->points[3].i = 1;
-	f->points[3].j = 2;
-	tet = ft_dlst_create_elem(f);
-	tet->content_size = 1;
-	f = ft_memalloc(sizeof(t_figure));
-	f->n = 1;
-	f->points = ft_memalloc(sizeof(t_point) * 4);
-	f->points[0].i = 0;
-	f->points[0].j = 0;
-	f->points[1].i = 0;
-	f->points[1].j = 1;
-	f->points[2].i = 1;
-	f->points[2].j = 0;
-	f->points[3].i = 1;
-	f->points[3].j = 1;
-	ft_dlst_push_front(&tet, ft_dlst_create_elem(f));
-	tet->content_size = 1;
-	matr = create_matrix(4, tet);
-	pr(matr);
-	printf("////////////\n");
-	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 0));
-	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 1));
-	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 4));
-	ft_dlst_push_front(&matr1, ft_dlst_popi(&matr, 7));
-	pr(matr1);
-	printf("////////////\n");
-	pr(matr);
-	printf("////////////\n");
-	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
-	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
-	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
-	ft_dlst_push_sort(&matr, ft_dlst_popi(&matr1, 0), &fillit_dlst_cmp);
-	pr(matr);
-	return (0);
-}
-*/

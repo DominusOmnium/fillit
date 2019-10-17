@@ -55,7 +55,7 @@ int		add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n)
 	return (1);
 }
 
-void	del_matrix(t_dlist **lst)
+void	delete_matrix(t_dlist **lst)
 {
 	t_dlist *tmp;
 

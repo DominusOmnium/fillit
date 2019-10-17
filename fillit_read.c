@@ -100,35 +100,5 @@ size_t	read_tetriminos(char *fname, t_dlist **figures)
 	if ((fd = open(fname, O_RDONLY)) == -1)
 		return (0);
 	return (read_tetr_cycle(str, fd, figures));
+	ft_putendl("4");
 }
-
-int main()
-{
-	size_t res;
-	t_dlist *figures;
-	//t_dlist *pr;
-
-	figures = NULL;
-	char fname[9] = "in.txt";
-
-	res = read_tetriminos(fname, &figures);
-	printf("%ld\n", res);
-	pr(create_matrix(6, figures));
-	/*int i = 0;
-	pr = figures;
-	while (pr != NULL)
-	{
-		printf("%d\n", pr->content_size);
-		int j = 0;
-	while (j < 4)
-	{
-		printf("%d - s element \n", j);
-		printf("%d\n", ((t_point*)(pr->content))[j].i);
-		printf("%d\n", ((t_point*)(pr->content))[j].j);
-		j++;
-	}
-	printf("\n");
-	pr = pr->next;
-	}*/
-}
-
