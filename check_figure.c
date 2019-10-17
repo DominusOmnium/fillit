@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_figure.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 13:45:47 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 16:25:06 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:29:04 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		is_correct_figure(t_point *p)
 {
 	int c;
-	
+
 	c = 0;
 	if (((ABS((p[0].i - p[1].i))) + (ABS((p[0].j - p[1].j)))) == 1)
 		c++;
@@ -71,7 +71,7 @@ int		check_figure(t_dlist **figures, char *str, size_t count)
 	int		c;
 
 	if ((m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4)) == NULL)
-		return (-1); 
+		return (-1);
 	if ((m_point = check_simbols(str, m_point)) == NULL)
 		return (-1);
 	c = 0;

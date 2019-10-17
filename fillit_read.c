@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 15:41:00 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:39:50 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 {
 	int		i;
-	int		rd;
 	size_t	res;
 	char	*new;
 
@@ -37,22 +36,19 @@ size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 		i = 0;
 		while (i++ < 4)
 		{
-			if ((rd = read(fd, str, 5)) < 5)
-				return (0);
-			if (str[4] != '\n')
+			if ((read(fd, str, 5) < 5) || (str[4] != '\n'))
 				return (0);
 			str += 4;
 		}
-		if (check_figure(figures, new, (res + 1)) == -1)
-			return (0);
-		else
-			res++;
+		res++;
 		str = new;
-		if ((rd = read(fd, str, 1)) != 0 && *str != '\n')
+		if ((check_figure(figures, new, res) == -1) ||
+					((i = read(fd, str, 1)) != 0 && *str != '\n'))
 			return (0);
-		if (rd == 0)
-			return (res);
+		if (i == 0)
+			break ;
 	}
+	return (res);
 }
 
 size_t	read_tetriminos(char *fname, t_dlist **figures)
