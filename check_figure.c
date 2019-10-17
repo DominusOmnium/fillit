@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_figure.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 13:45:47 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 13:00:15 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:06:14 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int		check_figure(t_dlist **figures, char *str, size_t count)
 	int		j;
 	int		c;
 
-	m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4);
+	if ((m_point = (t_point*)ft_memalloc(sizeof(t_point) * 4)) == NULL)
+		return (-1); 
 	if ((m_point = check_simbols(str, m_point)) == NULL)
 		return (-1);
 	c = 0;

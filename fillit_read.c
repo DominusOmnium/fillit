@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/17 13:18:33 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 14:41:40 by celva            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		push_tetriminos(t_dlist **figures, t_point *m_point, size_t n)
 size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 {
 	int		i;
+	int		rd;
 	size_t	res;
 	char	*new;
 
@@ -75,8 +76,12 @@ size_t	read_tetr_cycle(char *str, int fd, t_dlist **figures)
 		i = 0;
 		while (i++ < 4)
 		{
-			if (read(fd, str, 5) == 0)
+			if (((rd = read(fd, str, 5)) == 0) && i == 1)
 				return (res);
+			else
+				return (0);
+			if (rd != 5)
+				return (0);
 			if (str[4] != '\n')
 				return (0);
 			str += 4;
