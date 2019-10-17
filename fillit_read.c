@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit_read.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:41:58 by celva             #+#    #+#             */
-/*   Updated: 2019/10/16 22:30:57 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/17 13:18:33 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,4 @@ size_t	read_tetriminos(char *fname, t_dlist **figures)
 	if ((fd = open(fname, O_RDONLY)) == -1)
 		return (0);
 	return (read_tetr_cycle(str, fd, figures));
-	ft_putendl("4");
 }

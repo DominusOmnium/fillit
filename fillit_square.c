@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/06 19:56:57 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/09 14:47:05 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:57:44 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_answers_to_square(char ***sq, t_dlist *answ, size_t size)
 	while (answ != NULL)
 	{
 		i = 0;
-		while (i < size * size)
+		while (i < ((t_row*)(answ->content))->line_len)
 		{
 			if ((((t_row*)(answ->content))->line)[i] == '1')
 				(*sq)[i / size][i % size] = fill;
@@ -34,13 +34,13 @@ void	add_answers_to_square(char ***sq, t_dlist *answ, size_t size)
 	}
 }
 
-char	**create_square(size_t size, t_dlist *answ)
+char	**create_square(int size, t_dlist *answ)
 {
 	char	**res;
-	size_t	i;
+	int		i;
 	char	fill;
 
-	if ((res = (char**)ft_memalloc(size)) == NULL)
+	if ((res = (char**)ft_memalloc(sizeof(char*) * size)) == NULL)
 		return (NULL);
 	i = 0;
 	while (i < size)
@@ -52,7 +52,7 @@ char	**create_square(size_t size, t_dlist *answ)
 			ft_memdel((void**)&res);
 			return (NULL);
 		}
-		res[i] = ft_memset(res[i], '.', size);
+		ft_memset(res[i], '.', size);
 		i++;
 	}
 	add_answers_to_square(&res, answ, size);
@@ -71,7 +71,7 @@ void	print_square(char **sq, size_t size)
 	}
 }
 
-void	delete_square(char ***matrix, size_t size)
+void	delete_square(char ***matrix, int size)
 {
 	while (--size >= 0)
 		ft_memdel((void**)&(matrix[size]));

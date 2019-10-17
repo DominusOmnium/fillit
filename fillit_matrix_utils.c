@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 18:05:06 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/10 13:14:34 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:19:15 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ void	delete_matrix(t_dlist **lst)
 {
 	t_dlist *tmp;
 
+	write(1, "1\n", 2);
 	tmp = *lst;
 	while (tmp != NULL)
 	{
+		ft_memdel((void**)&(((t_row*)(tmp->content))->line));
 		ft_memdel(&(tmp->content));
 		tmp = tmp->next;
 	}
+	write(1, "2\n", 2);
 	ft_dlst_delete(lst);
 }

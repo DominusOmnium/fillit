@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celva <celva@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:19:25 by dkathlee          #+#    #+#             */
-/*   Updated: 2019/10/16 21:53:12 by celva            ###   ########.fr       */
+/*   Updated: 2019/10/17 12:55:33 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ typedef struct	s_row
 	int		n;
 }				t_row;
 
-char		**create_square(size_t size, t_dlist *answ);
+char		**create_square(int size, t_dlist *answ);
 void		print_square(char **sq, size_t size);
-void		delete_square(char ***matrix, size_t size);
+void		delete_square(char ***matrix, int size);
 void		delete_matrix(t_dlist **lst);
 int			add_row(t_dlist **matr, t_point pos, t_dlist *tetr, size_t n);
 t_dlist		*create_matrix(size_t sq_size, t_dlist *tetr);

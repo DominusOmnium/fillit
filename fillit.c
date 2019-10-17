@@ -6,7 +6,7 @@
 /*   By: dkathlee <dkathlee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 14:02:52 by marvin            #+#    #+#             */
-/*   Updated: 2019/10/10 13:32:40 by dkathlee         ###   ########.fr       */
+/*   Updated: 2019/10/17 13:58:57 by dkathlee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,24 +123,26 @@ size_t	find_square(char *fname, char ***sq)
 	t_dlist	*matr;
 	t_dlist	*answ;
 
+	tet = NULL;
 	sq_size = read_tetriminos(fname, &tet);
+	sq_size = 6;
 	if (sq_size == 0)
 		return (0);
 	while (1)
 	{
 		if ((matr = create_matrix(sq_size, tet)) == NULL)
 		{
-			delete_matrix(&matr);
+			//delete_matrix(&matr);
 			return (0);
 		}
 		answ = NULL;
-		if (can_fill(&matr, &answ, 4) == 1)
+		if (can_fill(&matr, &answ, 9) == 1)
 			break ;
 		sq_size++;
 	}
-	delete_matrix(&matr);
-	if (*sq = create_square(sq_size, answ) == NULL)
+	//delete_matrix(&matr);
+	if ((*sq = create_square(sq_size, answ)) == NULL)
 		sq_size = 0;
-	delete_matrix(&answ);
+	//delete_matrix(&answ);
 	return (sq_size);
 }
